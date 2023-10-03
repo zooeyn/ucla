@@ -1,0 +1,218 @@
+---
+title: "RMarkdown By example"
+author: "Jake Kramer"
+date: "May 5, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## This is a Header!
+
+### The more # you put at the beginning of a line
+
+#### The smaller the header text gets.
+
+# You can use a single # but
+
+## that is usually reserved for the title!
+
+In general you would use
+
+* sections: ## 
+* sub-sections: ### 
+* sub-sub-sections: #### etc
+
+1. To make a numbered list, you just write a number and a period.
+2. Remember, you just write a number and a period.
+    - To make a sub list you need two-tabs or four spaces and a +
+    - Or a -
+    * or a *
+    1. a number starts a numbered sublist
+    1. Even if you use the same number, Markdown don't care, you get the next one anyway.
+    4. And if you try to skip numbers, you STILL get the right one.
+    + But, if you hop out of the numbering and back in...
+    99. You can start at any number you want!
+    a. You can do letters too.
+    a. They behave the same way!
+    1. Not respecting your choices.
+        + How far can you nest? This is level 3.
+            4. level 4!
+                5. level 5...
+                    6. level 6!?
+                        + ...
+                            + ...
+                                + ...
+                                    + ...
+                                        + ...
+                                            + ...
+                                                + ...
+                                                    + ...
+                                                        + ...
+                                                            + ...
+                                                                + ...
+                                                                                                + At least 18 levels, so that should be enough for *most* purposes.
+
+That's enough lists... let's move on!
+
+***
+
+We can make a horizontal line with three asterisks ***
+
+> and we can make a block quote with the greater-than symbol: >
+Also note:
+To put text on a new line...
+
+You can emphasise *something* by putting it in the middle of two asterisks, and if you're feeling **bold** put something in the middle of four asterisks. don't put ***anything*** in the middle of six asterisks that's just overdoing it!
+
+For 
+the
+most
+part
+R doesn't care
+about you
+putting line
+breaks in 
+wherever you want.
+Nor                                     does                                  R                     care
+about                                   horizontal                            whitespace            (unless you're making nested lists.)
+
+One exception to that is if you put two spaces  
+at the end of a line then press enter. Note that this is different than pressing enter twice
+
+at the end of a line. See the gap between the text that pressing enter twice
+
+at the end of a line makes that two spaces  
+at the end of a line doesn't?
+
+***
+
+Tables | are | easy | to | make
+-------|-----|------|----|------
+We| just| divide| the| cells
+with| vertical| bars.| Easy, | right?
+
+You | don't | need | to | use | a | specific| number
+-|--|---|----|-----|------|--------|---------|
+of| horizontal | dashes | ---- | in | each| column | to
+make | a | table.|||||
+
+You | can | also | align
+:-|-:|:-:|-|
+columns| how | you | like
+right aligned text here. | left aligned text here. | centered text here. | plain old default here.
+:-| -:| :-: | -
+
+html comments look like this \<!-- comment goes in here --\>
+
+<!-- if I don't escape it, you cant see it!-->
+
+```{r}
+# This is an R "code chunk", to create one you need three back-ticks (usually found on the same key as ~)
+# you also need open and closing curly braces with a lower-case r inside.
+# you close a code chunk with another three back ticks.
+```
+
+```{r}
+# You shouldn't ever type one out though.
+# hit ctrl+alt+i or cmd+option+i
+# to create one automatically!
+```
+
+```{r}
+# code chunks evaluate R code:
+2 + 2
+```
+Then they display the output.
+
+You can set options for the code chunk, the first we'll discuss is the chunk name.  
+You put the name after the r inside the curly braces with no comma between them, like this: ```{r my code chunk}
+```{r my code chunk}
+# my code chunk here
+x <- sample(1:10)
+print(x)
+```
+
+Chunk names must be unique or your get errors ```{r my code chunk 2}
+```{r my code chunk 2}
+# my other code chunk here
+y <- rnorm(10)
+summary(y)
+```
+
+After the name you can put a comma and start adding options for how the chunk will be treated, eg: ```{r my code chunk 3, eval = FALSE}
+```{r my code chunk 3, eval = FALSE}
+# This chunk is displayed, but not ran.
+y <- pi
+print(y)
+```
+If we print y in another chunk after this one, it still has it's previous value!
+```{r}
+print(y)
+```
+
+On the other hand, sometimes we want our code to be ran and not seen (this looks nicer in a report you might do for work!), ```{r invisi-chunk, echo = FALSE} does this for us.
+
+```{r invisi-chunk, echo = FALSE}
+# This chunk is hidden, but it is run and produces output!
+plot(cars$speed, cars$dist)
+```
+
+or
+
+something like  ```{r stealth mode activated, echo = FALSE}
+```{r stealth mode activated, echo = FALSE}
+# This chunk is also hidden, but it is run and produces output!
+tan(pi/8)
+```
+
+Now, you might notice the raw output from the chunks doesn't look great. I agree! So we can hide the chunk with the echo = FALSE argument, and instead of outputting from the chunk, we can store anything we do in an object, then output it in what is called inline mode.
+
+In-line mode is started with a single backtick, and the letter r, followed by some r code, and closed with another backtick, like this: `` `r
+some_r_code` ``. I had to do some black magic to get this to display correctly.
+
+Here's an example of that at play:
+```{r, echo = FALSE}
+tanpi_8 <- tan(pi/8)
+pi/8
+```
+
+The tangent of pi/8 = `r tanpi_8`.
+
+There is also a "verbatim" mode which highlights text and doesn't evaluate special characters.
+
+The first verbatim mode is in-line, single back-tick open and close: `my verbatim inline text`. This is useful for showing things like dollar signs `$` or other special characters like comments `<!-- see? -->`.
+
+double ``ticks`` do the same thing as single, but they let you in-line verbatim single back ticks, see: `` a wild back-tick appears! --> ` `` 
+
+Three back ticks, the same as making an R code chunk but without the {r}, creates a verbatim block
+```
+This is useful if you just want to write some code examples:
+x <- 1
+y <- 1
+while the night is young do:
+      z <- x + y
+      swing your partner do si do
+
+I didn't htink of this before, but this
+    Might be an even better way to present your pseudocode
+    Than doing it in a 
+List
+    Structure!
+```
+
+If you know LaTeX, you'll be happy to know you can use LaTeX-like syntax (MathJax) to do some typesetting.
+
+A single `$` enters in-line math-mode and another `$` closes it. Like this: $\frac{\pi}{8} \approx 0.3927$
+
+While a double `$$` enters equation math-mode and another`$$` closes it. Like this:  
+$$\frac{\pi}{8} \approx 0.3927$$
+
+You can even combine either math-mode and in-line R, like this: ``$$\tan\left(\frac{\pi}{8}\right) = `r
+tan(pi/8)` $$ ``
+
+$$\tan\left(\frac{\pi}{8}\right) = `r tan(pi/8)`$$
+
+I hope you found this helpful!

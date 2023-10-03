@@ -1,0 +1,157 @@
+---
+title: "Homework 2"
+author: "Zooey Nguyen"
+date: "10/14/2019"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+
+The following output is a vector of the values of `sin(k*pi)` for values of k ranging from 1 to 10, making use of the fact that the `sin()` function is vectorised, meaning that when it is applied to a vector, it is applied to all elements of the vector individually. The result should theoretically be a vector of zeroes, but because of R's issues with rounding, it instead ends up as a vector of extremely small values that are essentially zero.
+
+```{r}
+k_vector <- (1:10)*pi
+sin(k_vector)
+```
+
+## Question 2
+
+a. Vector of commute times.
+
+```{r}
+commutes <- c(17, 16, 20, 24, 22, 15, 21, 15, 17, 22)
+```
+
+b. His average commute time can be found by typing `mean(commute_times)`, which outputs 18.9. His maximum commute time can be found with `max(commute_times)`, which outputs 24. His minimum commute time can be found with `min(commute_times)`, which outputs 15.
+
+c. Updating vector and mean.
+
+```{r}
+commutes[which(commutes == 24)] <- 18
+mean(commutes) # corrected mean commute time
+```
+
+d. Updating the RData file.
+
+```{r}
+load("commute_times.RData")
+commute_times[which(commute_times == 24)] <- 18
+mean(commute_times) # corrected mean commute time
+```
+
+## Question 3
+
+a. Writing the skewness function.
+
+```{r}
+skewness <- function(x) {
+  mean <- sum(x)/length(x)
+  numer <- sqrt(length(x)) * sum((x-mean)^3)
+  denom <- (sum((x-mean)^2))^(3/2)
+  numer/denom
+}
+```
+
+b. Skewness of Andy's commute times.
+
+```{r}
+skewness(commute_times)
+
+```
+
+c. Writing the one-pass skewness function.
+
+```{r}
+skewness_one <- function(x) {
+  n <- length(x)
+  mean <- sum(x)/n
+  numer <- sqrt(n) * (sum(x^3) - 3*mean*sum(x^2) + 2*n*mean^3)
+  denom <- (sum(x^2) - n*mean^2)^(3/2)
+  numer/denom
+}
+skewness_one(commute_times) # should match 0.40136
+```
+
+d. Comparing skewness formulas. The answers do not differ from the results in (b) and (c) because when the commute times are multiplied by 1e10, the relations between the variables do not change much, except that 1e10 is factored into the individual multiplications. As such, the differences between each term in the skewness functions are significant enough compared to the size of the initial inputs to not lose a drastic amount of precision in our final answer.
+
+```{r}
+commute_times_large <- commute_times*1e10
+skewness(commute_times_large)
+skewness_one(commute_times_large)
+```
+
+## Question 4
+
+```{r}
+two_exp <- 2^(1:15)
+three_power <- (1:15)^3
+two_exp[two_exp > three_power]
+```
+
+## Question 5
+
+```{r}
+na_only <- function(x) {
+  is.na(x) & !is.nan(x)
+}
+
+test <- c(7,NA,4,NA,3,Inf,NaN)
+na_only(test) # should output FALSE TRUE FALSE TRUE FALSE FALSE FALSE
+```
+
+## Question 6
+
+NA is treated as unknown in R, meaning it represents some boolean that could be either true or false. So when a logical operation has an ambiguous result, NA is outputted. For expressions where the logical operation is absolutely true or absolutely false regardless of whether NA would be true or false, then you get the absolute answer. This is seen when `4 > 3 | NA` and `4 < 3 & NA` are evaluated to TRUE and FALSE, respectively. In the first case, the left hand side is true and the right hand side is ambiguous, but because you're comparing them to see whether the left hand side OR right hand side is true, it can evaluate to TRUE anyway. For the other two cases, they evaluate to NA because the output also depends on whether the right-hand side is TRUE or FALSE.
+
+## Question 7
+
+Pseudocode:
+
+function is_TRUE(vector x) {
+
+- each element is compared to TRUE by checking exact match.
+
+- this vector then changes NA values to false: check it with an AND statement of a vector that identifies which values are NOT NA, then all matches of NA turn to FALSE.
+
+- output vector of comparisons.
+
+}
+
+function is_FALSE(vector x) {
+
+- each element is compared to FALSE by checking exact match.
+
+- this vector then changes NA values to false: check it with an AND statement of a vector that identifies which values are NOT NA, then all matches of NA turn to FALSE.
+
+- output vector of comparisons for element AND FALSE.
+
+}
+
+```{r}
+is_TRUE <- function(x) {
+  (x == TRUE) & !is.na(x)
+}
+
+is_FALSE <- function(x) {
+  (x == FALSE) & !is.na(x)
+}
+test1 <- c(TRUE, FALSE, NA)
+test2 <- c(1, 0, 1)
+is_TRUE(test1)
+is_FALSE(test1)
+is_TRUE(test2)
+is_FALSE(test2)
+```
+
+## Question 8
+
+```{r}
+jerry <- 2 : (8 * (5 %% 3) ^ -2) : (7 > 2)
+jerry
+```

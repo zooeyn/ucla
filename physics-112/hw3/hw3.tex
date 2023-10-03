@@ -1,0 +1,105 @@
+\documentclass[newpage]{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Physics 112}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{3}
+\begin{document}
+\maketitle
+
+
+\question
+Effective Boltzmann factor.
+\begin{align*}
+    P(\epsilon) &\propto \frac{P(E_{n+1})}{P(E_n)}  \\
+    &\propto	\frac{e^{-E_{n+1}/\tau}}{e^{-E_n/\tau}}	\\
+    &\propto	\frac{e^{(-n\epsilon - (\alpha-1)\epsilon)/\tau}}{e^{-n\epsilon/\tau}}	\\
+    &\propto	e^{-(\alpha-1)\epsilon/\tau}	\\
+    &\propto	\boxed{\exp{-\frac{\epsilon}{\tau}(1-\alpha)}}	\\
+\end{align*}
+
+\question
+Partition function.
+\begin{align*}
+    Z	&=	\boxed{\sum_{j=0}^n (2j+1) e^{-(j^2+j)\epsilon_0/\tau}}	\\
+\end{align*}
+
+Partition function in the limit $\tau \gg \epsilon_0$. Need to get the differential out.
+\begin{align*}
+    Z   &=	- \frac{\tau}{\epsilon_0} \sum_{j=0}^n \dv{j} e^{-(j^2+j)\epsilon_0/\tau}  \\
+    &=	- \frac{\tau}{\epsilon_0}  \int_0^\infty \dv{j} e^{-j(^2+j)\epsilon_0/\tau} dj	\\
+    &=	- \frac{\tau}{\epsilon_0}  e^{-(j^2+j)\epsilon_0/\tau}|_0^\infty	\\
+    &=  - \frac{\tau}{\epsilon_0} [e^{-\infty} - e^{0}]   \\
+    &=	\boxed{\frac{\tau}{\epsilon_0}}	\\
+\end{align*}
+
+Partition function in the limit $\epsilon_0 \gg \tau$.
+\begin{align*}
+    Z	&=	(2(0)+1) e^{-(0^2+0)\epsilon_0/\tau} +
+            (2(1)+1) e^{-(1^2+1)\epsilon_0/\tau}	\\
+        &=  \boxed{1 + 3e^{-2\epsilon_0/\tau}}
+\end{align*}
+
+Energy in the limit $\tau \gg \epsilon_0$.
+\begin{align*}
+    U	&=	\tau^2 \pdv{\ln Z}{\tau}	\\
+        &=  \tau^2 \pdv{\tau} \frac{\tau}{\epsilon_0}\\
+        &=	\boxed{\tau}	\\
+\end{align*}
+
+Energy in the limit $\epsilon_0 \gg \tau$.
+\begin{align*}
+    U	&=	\tau^2 \pdv{\tau} (1 + 3e^{-2\epsilon_0/\tau})	\\
+        &=	\tau^2 \frac{(6\epsilon_0/\tau^2) e^{-2\epsilon_0/\tau}}{(1 + 3e^{-2\epsilon_0/\tau})^2}	\\
+        &= \boxed{\frac{6\epsilon_0 e^{-2\epsilon_0/\tau}}{(1 + 3e^{-2\epsilon_0/\tau})^2}}	\\
+\end{align*}
+
+Heat capacity in the limit $\tau \gg \epsilon_0$.
+\begin{align*}
+    C_V	&=	\left(\pdv{U}{\tau}\right)_V	\\
+        &=  \pdv{\tau} \tau \\
+        &=  \boxed{1}
+\end{align*}
+
+Heat capacity in the limit $\epsilon_0 \gg \tau$.
+\begin{align*}
+    C_V	&=	\pdv{\tau} \frac{6\epsilon_0 e^{-2\epsilon_0/\tau}}{(1 + 3e^{-2\epsilon_0/\tau})^2}	\\
+        &=  \frac{\epsilon_0^2}{\tau^2} \frac{12(e^{-2\epsilon_0/\tau} - 3e^{-4\epsilon_0/\tau})}{(1 + 3e^{-2\epsilon_0/\tau})^3}  \\
+        &\approx  \frac{\epsilon_0^2}{\tau^2} \frac{12e^{-2\epsilon_0/\tau}}{1 + 9e^{-2\epsilon_0/\tau}}  \\
+        &\approx  \frac{\epsilon_0^2}{\tau^2} \frac{12}{e^{2\epsilon_0/\tau}+ 9}  \\
+        &\approx  \frac{\epsilon_0^2}{\tau^2} \frac{12}{e^{2\epsilon_0/\tau}}  \\
+        &\approx  12\frac{\epsilon_0^2}{\tau^2 e^{2\epsilon_0/\tau}}  \\
+        &\approx  \boxed{\frac{12e^{-2\epsilon_0/\tau}}{(\tau/\epsilon)^2}}  \\
+\end{align*}
+
+
+\question
+Every state n corresponds to an energy of $E_n = n\epsilon$ exactly up to N, and the system occupies one state at a time.
+\begin{align*}
+    Z	&=	\sum_{n=0}^N e^{-E_i/\tau}	\\
+        &=	\sum_{n=0}^{N} e^{-n\epsilon/\tau}	\\
+        &=	\sum_{n=1}^{N} (e^{-\epsilon/\tau})^n	\\
+        &=	\frac{1-(e^{-\epsilon/\tau})^{(N+1)}}{1-e^{-\epsilon/\tau}}	\\
+        &=	\boxed{\frac{1-\exp{-(N+1)\epsilon/tau}}{1-\exp{-\epsilon/\tau}}}	\\
+\end{align*}
+
+Expected value of open links in the limit $\epsilon \gg \tau$.
+\begin{align*}
+    \bar{n}	&=	\sum_n nP(n)	\\
+    &=	\sum_n \frac{ne^{-n\epsilon/\tau}}{\frac{1-e^{-(N+1)\epsilon/tau}}{1-e^{-\epsilon/\tau}}}	\\
+    &=	\sum_n \frac{ne^{-n\epsilon/\tau}(1-e^{-\epsilon/\tau})}{1-e^{-(N+1)\epsilon/\tau}}	\\
+    &\approx \sum_n \frac{n}{1-e^{-(N+1)\epsilon/\tau}} \\
+    &\approx \frac{N(N+1)}{2(1-e^{-(N+1)\epsilon/\tau})}   \\
+\end{align*}
+Ok I don't know this one.
+
+
+\question
+Proving partition function of sum of two systems is the product of partition function of the systems.
+\begin{align*}
+    Z_{1+2}	&=	\sum_i \sum_j e^{-(E_i + E_j)/\tau}  \\
+            &=  \sum_i \sum_j e^{-E_i/\tau} e^{-E_j/\tau}  \\
+            &=	\sum_i e^{-E_i/\tau} \sum_j	e^{-E_j/\tau}  \\
+            &=  \boxed{Z_1 * Z_2}
+\end{align*}
+\end{document}

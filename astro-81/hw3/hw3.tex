@@ -1,0 +1,77 @@
+\documentclass{homework}
+\usepackage{siunitx}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Astro 81}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{3}
+\begin{document}
+\maketitle
+
+
+\question
+\begin{alphaparts}
+	\questionpart Around the radio wave range.
+	\begin{align*}
+		r_0	&=	\SI{10}{\centi\metre} \left(\frac{\lambda_{min}}{\SI{550e-9}{\metre}}\right)^1.2	\\
+		\SI{10}{\metre}	&=	\SI{10}{\centi\metre} \left(\frac{\lambda_{min}}{\SI{550e-9}{\metre}}\right)^1.2	\\
+		\lambda_{min}	&=	\boxed{\SI{1.3e4}{\nano\metre}}
+	\end{align*}
+	\questionpart About half a meter.
+	\begin{align*}
+		r_0	&=	\SI{10}{\centi\metre} \left(\frac{\SI{2.2e-6}{\metre}}{\SI{550e-9}{\metre}}\right)^1.2	\\
+			&=	\boxed{\SI{52}{\centi\metre}}
+	\end{align*}
+	\questionpart If you used both telescopes as an interferometer then the angular resolution would improve ($\lambda_min$ decreases) and improve the overall light-gathering power for a single source since you are getting two streams of photons from the same object rather than just one.
+\end{alphaparts}
+
+
+\question
+The area of the 30cm diameter bucket is 1.5 times that of the 20cm diameter so its base area is 1.5 squared or 2.25 times the other bucket. This means the volume is also 2.25 times that of the other bucket given both of them have the same height. So the 20cm diameter bucket will need to stay out in the rain \fbox{2.25 times longer} than the large bucket would need to to collect the same amount of rain. The larger bucket would collect \fbox{2.25 times more rain} in the same time as the smaller bucket since its base area is that much larger for raindrops to fall on. You can think of telescope diameters the same way you do the buckets, since essentially a larger surface area gives you that much more space for particles, whether rain or photons, to fall on and be collected. If you have a certain amount of particles you need to collect, and you don't have much surface area for them to fall on, you're going to have to wait with time inversely correlated with how much surface area you have.
+
+
+\question
+The first telescope has a focal ratio of f/20, while the second one has a focal ratio of f/10. This means that the first one will "fill up" an image 2x more slowly than the second, for the same brightness of an image, so the exposure time can be \fbox{0.5 seconds} for the second image. The linear image size of the moon through a telescope will be inversely releated to the focal length as a shorter focal length will lead to a greater linear image size since the image rays have to converge earlier than it would for a longer focal length. So the diameter of the moon through the first would look $\frac{1/10}{1/15} = $ \fbox{1.5 times as long} as the image made by the second telescope.
+
+
+\question
+Mars is a distance of 1.5 AU from the sun so its radius is 1.5 times ours. Since flux density follows the inverse square law the flux density at Mars will be $(\frac{1}{1.5})^2 = \frac{1}{2.25}$ times that at Earth, or \fbox{$0.4 f_{\odot}$}.
+
+
+\question
+\begin{alphaparts}
+	\questionpart The specific intensity is in units of $\frac{\si{\watt}}{\si{\metre^2}\si{\hertz}\si{\steradian}}$. The specific flux will then be that times steradians. The solid angle of Earth at the distance of the Sun is the area of the Earth's cross-section over the distance squared, $\Omega = \frac{A}{r^2}$. The radius of the Earth is \SI{6.37e6}{\metre}, the distance to the sun is \SI{149.6e9}{\metre}, so the solid angle is \SI{5.7e-9}{\steradian}. The specific flux at Earth is then $I_\nu \vdot \SI{5.7e-9}{\steradian}$.
+	\questionpart The Sun's actual diameter is \SI{1.4e9}{\metre} so its apparent angular diameter is $\theta = \frac{l}{r} = \frac{\SI{1.4e9}{\metre}}{\SI{149.6e9}{\metre}} = \boxed{\SI{.01}{\radian}}$. The apparent solid angle is $\Omega = \frac{A}{r^2} = \frac{\pi \vdot (\SI{0.7e9}{\metre})^2}{(\SI{149.6e9}{\metre})^2} = \boxed{\SI{6e-5}{\steradian}}$.
+	\questionpart The specific intensity of sunlight at Earth is the same as it is anywhere, just \fbox{$I_\nu$}. It's measured with steradians, so while flux follows the inverse-square law since it is just a measure of density over actual area, a measurement of a steradian will scale as the square of the distance.
+\end{alphaparts}
+
+
+\question
+\begin{alphaparts}
+	\questionpart We are given apparent magnitude of 22. We can first find the absolute magnitude of the Sun.
+	\begin{align*}
+		-26.75 - M	&=	5 \log{.000004848} - 5	\\
+		M	&=	4.83
+	\end{align*}
+	So the absolute magnitude of the star is 4.83. We can then get the distance.
+	\begin{align*}
+		m - M	&= 	5 \log r - 5	\\
+		22 - 4.83	&=	5 \log r - 5	\\
+		r	&=	\boxed{\SI{2.71e4}{pc}}
+	\end{align*}
+	\questionpart The distance modulus as found before is $22 - 4.83 = \boxed{17.17}$.
+	\questionpart The absolute magnitude of the Sun as found before is \fbox{4.83}.
+\end{alphaparts}
+
+
+\question
+\begin{align*}
+	m_{bright} - m_{faint}	&=	-2.5 \log{\frac{F_{bright}}{F_{faint}}} \\
+	\frac{F_{bright}}{F_{faint}}	&=	10^{(9-19)/-2.5}	\\
+	&=	\boxed{10000}
+\end{align*}
+
+\question
+Greater distance will tend to correlate with greater redshift due to the expansion of space, so the change in the color of a star will depend a bit on distance. However, the intrinsic baseline color will not depend on distance (unless you're associating distant stars with young ones but that's a different discussion, in any case it doesn't depend on Earth), and for nearby stars it can be the case that its proper motion will lead to greater variation in redshift relative to the redshift due to expansion of space.
+
+\end{document}

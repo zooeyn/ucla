@@ -1,0 +1,207 @@
+---
+title: "Homework 3"
+author: "Zooey Nguyen"
+date: "10/21/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+
+```{r}
+commutes <- c(17, 16, 20, 24, 22, 15, 21, 15, 17, 22)
+mean <- mean(commutes)
+stdev <- sd(commutes)
+```
+
+(a) He had outlying commute times on days 4, 6, and 8.
+```{r}
+out_days <- which(commutes > mean + stdev | commutes < mean - stdev)
+out_days
+```
+
+(b) He had commute times within one standard deviation on days 1, 2, 3, 5, 7, 9, and 10.
+```{r}
+reg_days <- which(commutes < mean + stdev & commutes > mean - stdev)
+reg_days
+```
+
+(c) The proportion of days he had a commute time within one standard deviation was 0.7.
+```{r}
+length(reg_days)/length(commutes)
+```
+
+## Question 2
+
+(a)
+```{r}
+rep(seq(0,4), each=6)
+```
+
+(b)
+```{r}
+rep(seq(1,6), times=5)
+# alternative
+```
+
+(c)
+```{r}
+rep(seq(1,6), times=5) + rep(seq(0,4), each=6)
+```
+
+(d)
+```{r}
+rep_a <- function(x, n) {
+  rep(seq(0,x), each=n)
+}
+rep_b <- function(x,n) {
+  rep(seq(1,x), times=n)
+}
+
+# Verifying parts a and b
+rep_a(4, 6)
+rep_b(6, 5)
+```
+
+## Question 3
+
+(a) Characters take precedence over other data types when values in a vector must be coerced into being the same data type, so since `mixed_2` includes a character, all other entries in the vector are coerced to be characters, whereas in `mixed_1` the highest priority type is numeric and so the booleans are coerced to numerics (0 and 1).
+
+(b)
+```{r}
+c(TRUE, c(TRUE, FALSE, 4, 0), "3")
+```
+
+## Question 4
+
+(a) `mixed_2` is comprised of the character versions of only numbers and can therefore be converted to numeric. `mixed_3` has the character elements "TRUE" and "FALSE" which have an undefined conversion to numeric because they are strings, not booleans, which are defined to map to 0 and 1.
+
+(b) `mixed_2` and `mixed_3` are character vectors. The character strings TRUE, T, true, and t, and the corresponding ones for FALSE, are coded to convert to their respective booleans, and all other character values do not have a defined conversion and are thus mapped to NA. As such, for `mixed_2` you get a vector of all NAs, and for `mixed_3` you get the corresponding booleans for the first three values and NA for the remainder.
+
+(c)
+```{r}
+mixed_2 <- c(c(TRUE,TRUE,FALSE,4,0),"3")
+as.logical(as.numeric(mixed_2))
+```
+
+## Question 5
+
+(a)
+```{r}
+X <- rnorm(1e5)
+Y <- rnorm(1e6)
+Z <- vector()
+system.time({
+  for (i in 1:1e5) {
+    sum <- X[i] + Y[i]
+    Z <- c(Z, sum)
+  }
+})
+```
+
+(b)
+```{r}
+Z <- vector(length=1e5)
+system.time({
+  for (i in 1:1e5) {
+    sum <- X[i] + Y[i]
+    Z[i] <- sum
+  }
+})
+```
+
+(c)
+```{r}
+system.time({
+  Z <- X + Y
+})
+```
+
+The computation time was the fastest for the vectorised approach, which was closely followed by the method of using a pre-assigned vector, which was followed at length (over 14 seconds) by the method of appending to a vector over and over.
+
+## Question 6
+
+(a)
+```{r}
+fib1 <- 1
+fib2 <- 1
+full_fib <- c(fib1,fib2)
+while(fib1 + fib2 < 500){
+  sum <- fib1 + fib2
+  full_fib <- c(full_fib,sum)
+  fib1 <- fib2
+  fib2 <- sum
+}
+full_fib
+```
+
+(b)
+```{r}
+full_fib <- c(1,1)
+# icky but it involves no variables other than full_fib.
+while(full_fib[length(full_fib)] + full_fib[length(full_fib)-1] < 500){
+    full_fib <- c(full_fib, full_fib[length(full_fib)] + full_fib[length(full_fib)-1])
+}
+full_fib
+```
+(c) There are 33 Fibonacci numbers below 5 million.
+```{r}
+full_fib <- c(1,1)
+# icky but it involves no variables other than full_fib.
+while(full_fib[length(full_fib)] + full_fib[length(full_fib)-1] < 5000000){
+    full_fib <- c(full_fib, full_fib[length(full_fib)] + full_fib[length(full_fib)-1])
+}
+length(full_fib)
+```
+
+## Question 7
+```{r}
+sorter <- function(x) { # but I ardly even know er
+  for (i in 1:(length(x)-1)) {
+    min <- x[i]
+    min_pos <- i
+    for (k in i:length(x)) {
+      if (x[k] < min) {
+        min <- x[k]
+        min_pos <- k
+      }
+    }
+    if (i < min_pos) {
+      temp <- x[i]
+      x[i] <- x[min_pos]
+      x[min_pos] <- temp
+    }
+  }
+  x
+}
+sorter(commutes)
+```
+
+## Question 8
+
+(a) The loop is run 2454 times and the sequence string begins at index 9495.
+```{r}
+load("DNA.RData")
+match <- c("G","A","T","T","A","C","A")
+seq_i <- 0
+iter <- 0
+for(i in which(DNA == "G")){
+  iter <- iter + 1
+  if (identical(DNA[seq(i, i + length(match) - 1)], match)) {
+    seq_i <- i
+    break
+  }
+}
+iter
+seq_i
+```
+
+(b) The sequence string is located at indices 9495 to 9501 (which is 9495 + the length of the match vector - 1) in the DNA vector.
+```{r}
+seq_indices <- seq_i:(seq_i + length(match) - 1)
+seq_indices
+DNA[seq_indices] # extracted the correct sequence
+```

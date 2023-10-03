@@ -1,0 +1,78 @@
+\documentclass{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Astro 82}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{6}
+\usepackage{siunitx}
+\begin{document}
+\maketitle
+
+
+\question
+The pattern speed of the spiral structure at a radius of 8 kpc is (40 km/s/kpc)(8 kpc) = 320 km/s. This means the Sun is orbiting the galactic center \fbox{more slowly} than the spiral structure and gets overtaken by them. If we assume the Milky Way has four spiral arms equally spaced along the orbital path, this means that their relative velocity to the Sun is +80 km/s and the Sun would pass one after they make a relative orbital distance of 1/4 of the orbit at 8kpc, or $D = \frac{1}{4} 2\pi R = $ 12.56 kpc. Then the Sun passes through one every 12.56 kpc / (80 km/s) = 150 million years. The Sun has lived for about 5 billion years so it's passed through a spiral arm about \fbox{32 times}, give or take a few.
+
+
+\question
+Assume average peculiar velocity of 20 km/s in random directions, so stars in the area are moving like a 3D random walk. Ignore peculiar velocity of the Sun itself since all of them are random regardless. Effective collision cross-section area of the Sun is $\pi(50 AU)^2 = \SI{1.76e20}{\kilo\metre^2}$. Density of the tube extending from this cross sectional area by a distance $d = vt$ is the given number density. Mean free path of a star to the cross-sectional area is
+\begin{align*}
+    \bar{l}	&=	\frac{\text{distance in tube}}{\text{number of particles in tube}}	\\
+    \bar{l}	&=	\frac{\bar{v}t}{nV}	\\
+    \bar{l}	&=	\frac{\bar{v}t}{n(A\bar{v}t)}	\\
+    \bar{l}	&=	\frac{1}{nA}	\\
+    \bar{l}	&=	\frac{1}{(\SI{0.1}{\per pc^3})(\SI{1.76e20}{\kilo\metre^2})}	\\
+    \bar{l}	&=	\SI{1.66e21}{\kilo\metre}	\\
+\end{align*}
+Then we can get mean free time to collision. For comparison, the Sun's total lifespan is about \SI{e10}{yr}.
+\begin{align*}
+    \bar{t}	&=	\bar{l}/\bar{v}	\\
+    \bar{t}	&=	\SI{1.66e21}{\kilo\metre}/\SI{20}{\kilo\metre\per\second}	\\
+    \bar{t}	&=	\SI{8.3e19}{\second}	\\
+    \bar{t}	&=	\boxed{\SI{2.6e12}{yr}}	\\
+\end{align*}
+
+
+\question
+Find the radius at which the contained region of stars has about the same mass as the black hole itself. We will need to account for the density drop outside of the cluster.
+\begin{align*}
+    \SI{4e6}{} M_\odot	&= \frac{4}{3}\pi (\SI{0.5}{pc})^3 (500000 M_\odot \si{\per pc^3}) + \int_{\SI{0.5}{pc}}^R 4\pi r^2 \rho(r) \dd{r}	\\
+    \SI{4e6}{} M_\odot	&= \SI{2.62e5}{} M_\odot + \int_{\SI{0.5}{pc}}^R 4\pi r^2 \rho(r) \dd{r}	\\
+    \SI{3.74e6}{} M_\odot	&=  4\pi \int_{\SI{0.5}{pc}}^R r^2 (\frac{500000 M_\odot}{\si{pc^3}})(\frac{\SI{0.25}{pc^2}}{r^2}) \dd{r}	\\
+    \SI{0.5952}{pc}	&=  0.25R - \SI{0.125}{pc} \\
+    R   &=  \boxed{\SI{2.88}{pc}}
+\end{align*}
+
+
+\question
+Mass interior to solar orbit about center of the galaxy. Use information from last problem.
+\begin{align*}
+    M_{enc}	&=  \SI{2.62e5}{} M_\odot + 4\pi \int_{\SI{0.5}{pc}}^{\SI{8200}{pc}} r^2 (\frac{500000 M_\odot}{\si{pc^3}})(\frac{\SI{0.25}{pc^2}}{r^2}) \dd{r}	\\
+    M_{enc}    &=	\boxed{\SI{1.28e10}{} M_\odot}  \\
+\end{align*}
+
+
+\question
+Maximum radial velocity observed from the Sun to the star at radius R from the galactic center and Sun's galactic longitude l. Take velocities in the direction of r.
+\begin{align*}
+    \dot{r_s} &= V \cos{\alpha} \\
+    \dot{r_\odot}    &=	V_0 \sin{l}	\\
+    \dot{r} &=  V \cos{\alpha} - V_0 \sin{l}    \\
+    \dot{r}_{max}   &=  \boxed{V - V_0\sin{l}}  \\
+\end{align*}
+Evaluate at $V = V_0 = $ 250 km/s and $l = 30$.
+\begin{align*}
+    \dot{r}_{max}   &=  \SI{250}{\kilo\metre/\second}(1 - \sin{30})  \\
+    \dot{r}_{max}   &=  \boxed{\SI{125}{\kilo\metre/\second}}
+\end{align*}
+There are two points on the curve the star could be when it's at the same angle $l$. However, if we want to use the maximum radial velocity as before, the angle between the star and $r$ will be $\alpha =$ 90 degrees.
+\begin{align*}
+    \SI{80}{\kilo\metre/\second}   &=  \SI{250}{\kilo\metre/\second}(1 - \sin{l})	\\
+    \sin{l} &=  0.68    \\
+    R   &=  R_0 \sin{l} \\
+    R   &=  0.68 R_0 \\
+    R_0^2   &=  R^2 + r^2   \\
+    r^2 &=  R_0^2 - (0.68 R_0)^2    \\
+    r   &=  \boxed{0.56R_0}
+\end{align*}
+
+\end{document}

@@ -1,0 +1,19 @@
+# Pseudocode for Hangman
+# 
+# Choose a word from a dictionary.
+# Output underscores, one for each letter in the chosen word.
+# Draw some gallows.
+# 
+# While the game is not over:
+# Ask user for a letter.
+# If the letter guessed is in the word chosen:
+#     Replace the underscores with the letter as appropriate.
+#   If not:
+#     Draw a body part.
+#     Write the guessed letter into the trash bin.
+#     
+
+install.packages("swirl")
+library(swirl)
+
+# ALWAYS USE YOUR BRUIN ID WHEN ASKED "What shall I call you?"

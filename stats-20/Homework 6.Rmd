@@ -1,0 +1,486 @@
+---
+title: "Homework 6"
+author: "Zooey Nguyen"
+date: "11/10/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## My test vectors.
+
+```{r}
+# numerics
+a <- 1:10
+b <- c(11:18, NA)
+c <- c(NULL)
+d <- c(T, T, F, F, NA, T, NA)
+```
+
+
+## Function answers.
+
+```{r}
+my_min <- function(x, na.rm=FALSE) {
+  # checks
+  if (length(x) == 0) {
+    return(NULL)
+  }
+  if (na.rm == TRUE) {
+    x <- x[!is.na(x)]
+  }
+  
+  min <- x[1]
+  for (i in 1:length(x)) {
+    if (x[i] < min) {
+      min <- x[i]
+    }
+  }
+  min
+
+}
+
+
+my_max <- function(x, na.rm=FALSE) {
+  # checks
+  if (length(x) == 0) {
+    return(NULL)
+  }
+  if (na.rm == TRUE) {
+    x <- x[!is.na(x)]
+  }
+  
+  max <- x[1]
+  for (i in 1:length(x)) {
+    if (x[i] > max) {
+      max <- x[i]
+    }
+  }
+  max
+}
+
+my_range <- function(x, na.rm=FALSE) {
+  # checks
+  if (length(x) == 0) {
+    return(0)
+  }
+  if (na.rm == TRUE) {
+    x <- x[!is.na(x)]
+  }
+  
+  my_max(x) - my_min(x)
+}
+
+my_cov <- function(x, y, na.rm=FALSE) {
+  # checks
+  if (length(x) == 0 || length(y) == 0) {
+    return(NULL)
+  }
+  if (na.rm == TRUE) {
+    x <- x[!is.na(x)]
+    y <- y[!is.na(y)]
+  }
+  if (length(x) != length(y)) {
+    warning("Incompatible dimensions.")
+    return()
+  }
+  
+  sum((x-mean(x))*(y-mean(y))) / (length(x) - 1)
+}
+
+# Note: removal of incomplete pairs is assumed for future pairwise problems as well.
+my_cor <- function(x, y, na.rm=FALSE) {
+  # checks
+  if (length(x) == 0 || length(y) == 0) {
+    return(NULL)
+  }
+  if (na.rm == TRUE) {
+    x <- x[!is.na(x)]
+    y <- y[!is.na(y)]
+  }
+  # removing incomplete pairs
+  if (length(x) != length(y)) {
+    if (length(x) < length(y)) {
+      y <- y[1:length(x)]
+    } else {
+      x <- x[1:length(y)]
+    }
+  }
+  
+  cov(x, y) / (sd(x)*sd(y)) # thank you Wikipedia for a simpler formula
+}
+
+my_pmin <- function(x, y, na.rm=FALSE) {
+  # checks
+  if (length(x) == 0 || length(y) == 0) {
+    return(NULL)
+  }
+  if (na.rm == TRUE) {
+    x <- x[!is.na(x)]
+    y <- y[!is.na(y)]
+  }
+  # removing incomplete pairs
+  if (length(x) != length(y)) {
+    if (length(x) < length(y)) {
+      y <- y[1:length(x)]
+    } else {
+      x <- x[1:length(y)]
+    }
+  }
+  
+  mins <- vector()
+  for (i in 1:length(x)) {
+    # need to put pairs in a vector for my_min
+    mins <- c(mins, my_min( c(x[i], y[i]) ))
+  }
+  mins
+}
+
+my_pmax <- function(x, y, na.rm=FALSE) {
+  # checks
+  if (length(x) == 0 || length(y) == 0) {
+    return(NULL)
+  }
+  if (na.rm == TRUE) {
+    x <- x[!is.na(x)]
+    y <- y[!is.na(y)]
+  }
+  # removing incomplete pairs
+  if (length(x) != length(y)) {
+    if (length(x) < length(y)) {
+      y <- y[1:length(x)]
+    } else {
+      x <- x[1:length(y)]
+    }
+  }
+  
+  maxs <- vector()
+  for (i in 1:length(x)) {
+    # need to put pairs in a vector for my_max
+    maxs <- c(maxs, my_max( c(x[i], y[i]) ))
+  }
+  maxs
+}
+
+# x is the vector, q is the quantile number
+my_quantile <- function(x, q, na.rm=FALSE) {
+  if (length(x) == 0) {
+    return(NULL)
+  }
+  if (na.rm == TRUE) {
+    x <- x[!is.na(x)]
+  }
+  if (q < 0 || q > 100) {
+    warning("Not a valid quantile.")
+    return()
+  }
+  
+  x <- x[order(x)]
+  # find index of given quantile position
+  i <- floor(q/100*(length(x) + 1))
+  if (i == 0) {
+    x[1]
+  } else {
+    x[i]
+  }
+}
+
+my_rev <- function(x) {
+  if (length(x) == 0) {
+    return(NULL)
+  }
+  rev <- vector()
+  for (i in 1:length(x))
+    rev[i] <- x[length(x)-i+1]
+  rev
+}
+
+# I think the sorting algorithm from last time-- search for the minimum value in the right-aligned subset of numbers in the dataset and move it to the front, then decrease the subset size by 1 (to exclude the newly-chosen minimum).
+my_sort <- function(x, decreasing=FALSE, na.last=TRUE) {
+  if (length(x) == 0) {
+    return(NULL)
+  }
+  nas <- rep(NA, sum(is.na(x)))
+  x <- x[!is.na(x)]
+  for (i in 1:(length(x))) {
+    min <- x[i]
+    p <- i
+    for (j in i:length(x)) {
+      if (x[j] < min) {
+        min <- x[j]
+        p <- j
+      }
+    }
+    # swap the min value and the next
+    temp <- x[i]
+    x[i] <- min
+    x[p] <- temp
+  }
+  if (is.na(na.last)) {
+    x
+  } else if (!is.na(na.last) && na.last == TRUE) {
+    c(x, nas)
+  } else {
+    c(nas, x)
+  }
+}
+
+my_length <- function(x) {
+  i <- 0
+  for (num in x) {
+    i <- i + 1
+  }
+  i
+}
+
+my_sum <- function(x, na.rm=FALSE) {
+  if (na.rm == TRUE) {
+    x <- x[!is.na(x)]
+  }
+  sum <- 0
+  for (num in x) {
+    sum <- sum + num
+  }
+  sum
+}
+
+my_diff<- function(x) {
+  diffs <- vector(mode="numeric")
+  if (length(x) == 0) {
+    diffs
+  }
+  for (i in 1:length(x)-1) {
+    diffs <- c(diffs, x[i+1]-x[i])
+  }
+  diffs
+}
+
+my_cumsum <- function(x) {
+  cumsum <- vector(mode="numeric")
+  if(length(x) == 0) {
+    return(cumsum)
+  }
+  for (i in 1:length(x)) {
+    cumsum <- c(cumsum, my_sum(x[1:i], na.rm=TRUE))
+  }
+  cumsum
+}
+
+my_summary <- function(x) {
+  nas <- sum(is.na(x))
+  x <- x[!is.na(x)] # remove NAs
+  mode <- mode(x)
+  df <- data.frame("Mode" = mode, "NAs" = nas)
+  if (mode == "numeric" && class(x) != "factor") {
+    df <- cbind(df, "Minimum" = my_min(x))
+    df <- cbind(df, "1st Quartile" = my_quantile(x, 25))
+    df <- cbind(df, "Median" = my_quantile(x, 50))
+    df <- cbind(df, "Mean" = mean(x))
+    df <- cbind(df, "3rd Quartile" = my_quantile(x, 75))
+    df <- cbind(df, "Max" = my_max(x))
+    df <- cbind(df, "Range" = my_range(x))
+  } else if (class(x) == "factor") {
+    for (i in 1:length(table(x))) {
+      df <- cbind(df, table(x)[i])
+      names(df)[2+i] <- levels(x)[i]
+    }
+  } else if (mode == "logical") {
+    df <- cbind(df, "FALSE" = sum(!x))
+    df <- cbind(df, "TRUE" = sum(x))
+  } else if (mode == "character") {
+    df <- cbind(df, "Length" = my_length(x))
+  }
+  df
+}
+
+my_unique <- function(x) {
+  if (length(x) == 0) {
+    return(NULL)
+  }
+  vec <- vector()
+  for (num in x) {
+    # check to see if value is repeated.
+    # if repeated and already included in vec, don't append
+    if (is.na(num)) {
+      reps <- sum(is.na(x))
+      if (reps > 1 && any(is.na(vec))) {
+        next
+      }
+    } else {
+      temp_x <- x[!is.na(x)]
+      reps <- sum(temp_x == num)
+      if (reps > 1 && any(vec == num)) {
+        next
+      }
+    }
+    vec <- c(vec, num)
+  }
+  vec
+}
+
+my_duplicated <- function(x) {
+  if (length(x) == 0) {
+    return(NULL)
+  }
+  
+  vec <- vector()
+  dupes <- vector()
+  for (num in x) {
+    # check to see if value is repeated.
+    # if repeated and already included in vec, append TRUE to dupes and move on, otherwise FALSE.
+    if (is.na(num)) {
+      reps <- sum(is.na(x))
+      if (reps > 1 && any(is.na(vec))) {
+        dupes <- c(dupes, TRUE)
+        next
+      }
+    } else {
+      temp_x <- x[!is.na(x)]
+      reps <- sum(temp_x == num)
+      if (reps > 1 && any(vec == num)) {
+        dupes <- c(dupes, TRUE)
+        next
+      }
+    }
+    vec <- c(vec, num)
+    dupes <- c(dupes, FALSE)
+  }
+  dupes
+}
+
+my_table <- function(x, exclude=FALSE) {
+  if (exclude) {
+    x <- x[!is.na(x)]
+    x <- x[!is.nan(x)]
+  }
+  
+  vec <- vector(mode="numeric")
+  for (num in my_unique(x)) {
+    if (is.na(num)) {
+      reps <- sum(is.na(x))
+    } else { 
+      tempx <- x[!is.na(x)]
+      reps <- sum(tempx == num)
+    }
+    vec <- c(vec, reps)
+  }
+  names(vec) <- my_unique(x)
+  vec
+}
+
+my_which <- function(x) {
+  if (length(x) == 0) {
+    return(NULL)
+  }
+  
+  vec <- vector()
+  for (i in 1:length(x)) {
+    if (identical(TRUE, x[i])) {
+      vec <- c(vec, i)
+    }
+  }
+  vec
+}
+
+my_med_apply <- function(x, MARGIN=1, na.rm=FALSE) {
+  vec <- vector()
+  if (MARGIN == 1) {
+    for (i in 1:nrow(x)) {
+      row <- x[i,]
+      if (na.rm) { row <- row[!is.na(row)] }
+      vec <- c(vec, median(row))
+    }
+  } else if (MARGIN == 2) {
+    for (i in 1:ncol(x)) {
+      col <- x[,i]
+      if (na.rm) { col <- col[!is.na(col)] }
+      vec <- c(vec, median(col))
+    }
+  } else {
+    warning("Invalid MARGIN arg.")
+    return()
+  }
+  vec 
+}
+
+my_t <- function(x) {
+  if (is.vector(x)) {
+    rows <- 1
+    cols <- length(x)
+  } else if (is.matrix(x)) {
+    rows <- nrow(x)
+    cols <- ncol(x)
+  }
+  
+  mat <- matrix(nrow = cols, ncol = rows)
+  for (i in 1:rows) {
+    for (j in 1:cols) {
+      if (is.vector(x)) {
+        mat[j, i] <- x[j]
+      } else {
+        mat[j, i] <- x[i, j]
+      }
+    }
+  }
+  mat
+}
+
+my_row <- function(x) {
+  matrix(rep(1:nrow(x), ncol(x)), nrow=nrow(x))
+}
+
+my_col <- function(x) {
+  matrix(rep(1:ncol(x), nrow(x)), nrow=nrow(x), byrow=TRUE)
+}
+
+my_diag <- function(x=NA, nrow=NA) {
+  if (is.matrix(x)) {
+    vec <- vector()
+    for (i in 1:my_min(c(nrow(x), ncol(x)))) {
+      vec <- c(vec, x[i, i])
+    }
+    vec
+  } else if (is.na(x) && !is.na(nrow)) {
+    m <- matrix(0, nrow=nrow, ncol=nrow)
+    for (i in 1:nrow) {
+      m[i,i] <- 1
+    }
+    m
+  } else if (is.vector(x) && length(x) == 1) {
+    m <- matrix(0, nrow=x[1], ncol=x[1])
+    for (i in 1:nrow(m)) {
+      m[i,i] <- 1
+    }
+    m
+  } else if (is.vector(x)) {
+    m <- matrix(0, nrow=length(x), ncol=length(x))
+    for (i in 1:nrow(m)) {
+      m[i,i] <- x[i]
+    }
+    m
+  }
+}
+
+my_ifelse <- function(x, yes, no) {
+  yes <- rep(yes, length=length(x))
+  no <- rep(no, length=length(x))
+  vec <- vector()
+  for (i in 1:length(x)) {
+    if (is.na(x[i])) {
+      vec <- c(vec, NA)
+    } else if (x[i] == TRUE) {
+      vec <- c(vec, yes[i])
+    } else {
+      vec <- c(vec, no[i])
+    }
+  }
+  vec
+}
+
+```
+
+
+
+

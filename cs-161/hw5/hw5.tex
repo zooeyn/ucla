@@ -1,0 +1,129 @@
+\documentclass[]{homework}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{caption}
+\usepackage{xparse}
+
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{CS 161}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{5}
+
+\begin{document}
+\maketitle
+
+\question
+\begin{alphaparts}
+\questionpart The sentence is \fbox{neither}, it is invalid. "Smoke implies fire" does not imply "No smoke implies no fire" because "No smoke and fire" is not precluded by "Smoke implies fire."
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    Smoke & Fire & $\neg$Smoke & $\neg$Fire
+    & Smoke$\implies$Fire
+    & $\neg$Smoke$\implies \neg$Fire 
+    & \shortstack{(Smoke$\implies$Fire)$\implies$\\($\neg$Smoke$\implies \neg$Fire)} \\
+    \hline
+    T & T & F & F & T & T & T \\
+    T & F & F & T & F & T & T \\
+    F & T & T & F & T & F & F \\
+    F & F & T & T & T & T & T \\
+    \hline
+\end{tabular}
+
+\questionpart The sentence is \fbox{neither}, it is invalid. "Smoke implies fire" means that all events in which there is smoke will imply fire. The event "Smoke or heat" may or may not include smoke, and in the case it does not include smoke, "Smoke implies fire" does not imply any relationship.
+
+\begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    Smoke & Fire & Heat
+    & Smoke$\implies$Fire
+    & Smoke$\lor$Heat 
+    & \shortstack{(Smoke$\lor$Heat)\\$\implies$Fire}
+    & \shortstack{(Smoke$\implies$Fire)$\implies$ \\ ((Smoke$\lor$Heat)$\implies$Fire)} \\
+    \hline
+    T & T & T & T & T & T & T \\
+    T & F & T & F & T & F & T \\
+    F & T & T & T & T & T & T \\
+    F & F & T & T & T & F & F \\
+    T & T & F & T & T & T & T \\
+    T & F & F & F & T & F & T \\
+    F & T & F & T & F & T & T \\
+    F & F & F & T & F & T & T \\
+    \hline
+\end{tabular}
+
+\questionpart This is \fbox{valid}. As seen in the truth table, the starred propositions imply each other, as in they are each true iff the other is true. 
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    Smoke & Fire & Heat
+    & \shortstack{Smoke\\$\land$Heat}
+    & \shortstack{(Smoke$\land$Heat)\\$\implies$Fire}
+    & \shortstack{Smoke\\$\implies$Fire}
+    & \shortstack{Heat\\$\implies$Fire}
+    & \shortstack{(Smoke$\implies$Fire)\\$\lor$(Heat$\implies$Fire)}
+    & \shortstack{original\\sentence} \\
+    \hline
+    T & T & T & T & T* & T & T & T* & T \\
+    T & F & T & T & F* & F & F & F* & T \\
+    F & T & T & F & T* & T & T & T* & T \\
+    F & F & T & F & T* & T & F & T* & T \\
+    T & T & F & F & T* & T & T & T* & T \\
+    T & F & F & F & T* & F & T & T* & T \\
+    F & T & F & F & T* & T & T & T* & T \\
+    F & F & F & F & T* & T & T & T* & T \\
+    \hline
+\end{tabular}
+\end{alphaparts}
+
+\question
+\begin{alphaparts}
+    \questionpart First definitions:
+        \begin{align*}
+            \text{is mythical}	&= 	A &\text{is mortal}	&= 	B \\
+            \text{is mammal}	&= 	C &\text{is horned}	&= 	D \\
+            \text{is magical}	&= 	E \\
+        \end{align*}
+        Then sentences:
+        \begin{itemize}
+            \item If A, then not B.
+            \item If not A, then (B and C).
+            \item If (not B or C), then D.
+            \item If D, then E.
+        \end{itemize}
+    \questionpart Sentences in CNF:
+        \begin{itemize}
+            \item $A \implies \neg B$
+            \item $\neg A \implies (B \land C)$
+            \item $(\neg B \lor C) \implies D$
+            \item $D \implies E$
+        \end{itemize}
+    \questionpart
+        \begin{enumerate}
+            \item \fbox{No}, $A$ and $\neg A$ are always premises and their implications are only premises for other propositions.
+            \item \fbox{Yes}, $E$ is implied by $D$ which is in turn implied by $\neg B$ and $C$.
+            \item \fbox{Yes}, $D$ can be known if $\neg B$ or $C$ is known.
+        \end{enumerate}
+\end{alphaparts}
+
+\question
+\begin{itemize}
+    \item P(oil) = 0.5
+    \item P(gas) = 0.2
+    \item P(neither) = 0.3
+    \item P(both) = 0
+    \item If oil then P(positive) = 0.9 = P(positive|oil)
+    \item If gas then P(positive) = 0.3 = P(positive|gas)
+    \item If neither then P(positive) = 0.1 = P(positive|neither)
+\end{itemize}
+We want to find P(oil|positive). Use Bayes:
+\begin{align*}
+    P(oil|positive) &= \frac{P(positive|oil)P(oil)}{P(positive)}    \\
+                    &= \frac{P(positive|oil)P(oil)}{P(positive|oil)P(oil) + P(positive|gas)P(gas) + P(positive|neither)P(neither)}    \\
+                    &= \frac{(0.9)(0.5)}{(0.9)(0.5) + (0.3)(0.2) + (0.1)(0.3)}  \\
+                    &= \frac{5}{6}
+\end{align*}
+The probability that oil is present is \fbox{5/6}.
+
+\end{document}

@@ -1,0 +1,91 @@
+\documentclass[newpage]{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Physics 115A}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{9}
+\begin{document}
+\maketitle
+
+\question
+Commutator distributive identity.
+\begin{align*}
+	[AB,C]	&=	ABC - CAB \\
+	&=	ABC - ACB + ACB - CAB\\
+	&=	A(BC - CB) + (AC - CA)B \\
+	&=	\boxed{A[B,C] + [A,C]B}	\\
+\end{align*}
+Exponentiated position and momentum commutator.
+\begin{align*}
+	[x^n, p]	&=	x^n p - p x^n	\\
+	&=	-x^n i\hbar \dv{x} + i\hbar \dv{x} x^n		\\
+	&=	-i\hbar x^n \dv{x} + i\hbar nx^{n-1} + i\hbar x^n \dv{x}	\\
+	&=	\boxed{i\hbar nx^{n-1}}	\\
+\end{align*}
+Function and momentum commutator.
+\begin{align*}
+	[f(x), p]	&=	f(x) p - p f(x)	\\
+	&=	- f(x) i\hbar\dv{x} + i\hbar\dv{x} f(x)	\\
+	&=	- i\hbar f(x)\dv{x} + i\hbar f'(x) + i\hbar f(x)\dv{x}	\\
+	&=	\boxed{i\hbar \dv{f}{x}}
+\end{align*}
+
+\question
+Uncertainty in position vs energy.
+\begin{align*}
+	\sigma_x \sigma_H	&=	\frac{1}{2i} |\langle [A,B] \rangle|	\\
+	&=	\frac{1}{2i} |\langle [x,\frac{p^2}{2m} + V] \rangle|	\\
+	&=	\frac{1}{2i} |\langle \frac{1}{2m}[x,p^2] + [x,V] \rangle|	\\
+	&=	\frac{1}{2i} |\langle \frac{1}{2m}(xp^2 - p^2x)\rangle|	\\
+	&=	\frac{1}{2i} |\langle \frac{1}{2m}((xp-px)p + p(xp-px))\rangle|	\\
+	&=	\frac{1}{2i} |\langle \frac{1}{2m}(2i\hbar p)\rangle|	\\
+	&=	\boxed{\frac{\hbar}{2m} |\langle p \rangle|}	\\
+\end{align*}
+In stationary states, uncertainty in energy is 0, as is expected value of momentum on the other side of the inequality, so it doesn't give us information on uncertainty in position.
+
+\question
+Normalising with A.
+\begin{align*}
+	1	&=	\int_{-\infty}^{\infty}	\Big| \frac{A}{x^2+a^2} \Big|^2	\dd{x}	\\
+	\frac{1}{A^2}	&=	\int_{-\infty}^{\infty}	\frac{1}{(x^2+a^2)^2}	\dd{x}	\\
+	\frac{1}{A^2}	&=	\frac{\pi}{2a^3}	\\
+	A	&=	\boxed{\sqrt{\frac{2}{\pi}} a^{3/2}}
+\end{align*}
+Expectation values of position.
+\begin{align*}
+	E(x)	&=	\frac{2a^3}{\pi}	\int_{-\infty}^{\infty}	\frac{x}{(x^2+a^2)^2}	\dd{x}	\\
+		&=	\boxed{0}	\\
+	E(x^2)	&=	\frac{2a^3}{\pi}	\int_{-\infty}^{\infty}	\frac{x^2}{(x^2+a^2)^2}	\dd{x}	\\
+		&=	\frac{2a^3}{\pi} \frac{\pi}{2a}	\\
+		&=	\boxed{a^2}	\\
+	\sigma_x	&=	\sqrt{E(x^2)-E(x)^2}	\\
+		&=	\boxed{a}	\\
+\end{align*}
+Momentum space wavefunction.
+\begin{align*}
+	\phi(p,0)	&=	\frac{1}{\sqrt{2\pi\hbar}}  \int_{-\infty}^{\infty}	e^{-ipx/\hbar} \Psi(x,0)	\dd{x}	\\
+	&=	\sqrt{\frac{2}{\pi}} a^{3/2} \frac{1}{\sqrt{2\pi\hbar}} \int_{-\infty}^{\infty}	\frac{e^{-ipx/\hbar}}{x^2+a^2}	\dd{x}	\\
+	&=	\frac{2a^{3/2}}{\pi\sqrt{\hbar}}  \int_{0}^{\infty} \frac{\cos(px/\hbar)-i\sin(px/\hbar)}{x^2+a^2}	\dd{x}	\\
+	&=	\frac{2a^{3/2}}{\pi\sqrt{\hbar}}  \frac{\pi}{2a} e^{-|p|a/\hbar}	\\
+	&=	\boxed{\sqrt{\frac{a}{\hbar}} e^{-|p|a/\hbar}}	\\
+\end{align*}
+Expectation values of momentum.
+\begin{align*}
+	E(p)	&=	\frac{a}{\hbar} \int_{-\infty}^{\infty}	pe^{-2|p|a/\hbar}	\dd{p}	\\
+		&=	\boxed{0}	\\
+	E(p^2)	&=	\frac{a}{\hbar} \int_{-\infty}^{\infty}	p^2e^{-2|p|a/\hbar}	\dd{p}	\\
+	&=	\frac{2a}{\hbar} \int_{0}^{\infty}	p^2e^{-2|p|a/\hbar}	\dd{p}	\\
+	&=	\frac{2a}{\hbar} \frac{\hbar^3}{4a^3}	\\
+	&=	\boxed{\frac{\hbar^2}{2a^2}}	\\
+	\sigma_p	&=	\sqrt{E(p^2)-E(p)^2}	\\
+		&=	\frac{\hbar}{a\sqrt{2}}	\\
+\end{align*}
+Uncertainty principle check.
+\begin{align*}
+	\sigma_x \sigma_p	&=	a\frac{\hbar}{a\sqrt{2}}	\\
+		&=	\frac{\hbar}{\sqrt{2}}	\\
+		&>	\frac{\hbar}{2}
+\end{align*}
+
+
+\end{document}

@@ -1,0 +1,65 @@
+\documentclass{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Math 151A}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{4}
+\begin{document}
+\maketitle
+
+\question
+We wish to prove that the Lagrangian polynomial interpolant is the unique polynomial interpolant to a set of points. Assume $Q(x), P(x)$ are distinct polynomial interpolants for a set of points so that $f(x_i) = P(x_i) = Q(x_i)$ with a difference $\phi(x) = P(x) - Q(x)$. Since both are degree $n$, $\phi(x)$ is also degree $n$. However, because their difference is 0 at the $n+1$ points in the dataset, $\phi(x)$ necessarily has at least $n+1$ roots. But $\phi(x)$ being degree $n$ means it cannot have more than $n$ roots. Therefore, it must be the case that $\phi(x) = 0$ and that $Q(x) = P(x)$.
+
+\question
+Construct Lagrangian polynomial for $f(x) = \ln x$ at $x = 1, 2, 3$.
+\begin{align*}
+	P(x)	&=
+	\frac{x-2}{1-2} \frac{x-3}{1-3} (\ln 1) + 
+	\frac{x-1}{2-1} \frac{x-3}{2-3} (\ln 2) + 
+	\frac{x-1}{3-1} \frac{x-2}{3-2} (\ln 3) \\
+	P(x)	&= \boxed{-\ln 2 (x-1)(x-3) + \frac{\ln 3}{2} (x-1)(x-2)} \\
+\end{align*}
+Approximating $\ln 1.5$ and $\ln 2.4$ with errors.
+\begin{align*}
+	P(1.5)	&=	0.3825	\\
+	f(1.5)	&=	0.4054	\\
+	e_{abs}(1.5)	&=	0.0229	\\
+	e_{rel}(1.5)	&=	0.0564	\\
+	P(2.4)	&=	0.8898	\\
+	f(2.4)	&=	0.8754	\\
+	e_{abs}(2.4)	&=	0.0144	\\
+	e_{rel}(2.4)	&=	0.0164	\\
+\end{align*}
+
+\question
+We have points $(1, 0), (1.25, -0.707), (1.6, -0.951)$. Note $f(1.4) = -0.951$.
+
+Linear interpolant.
+\begin{align*}
+	P(x)	&= \frac{x-1.25}{1-1.25}(0) + \frac{x-1}{1.25-1}(-0.707)	\\
+	&=	\boxed{-2.828(x-1)}	\\
+	P(1.4)	&=	-1.1312	\\
+	e_{abs}(1.4)	&=	0.1802	\\
+\end{align*}
+
+Quadratic interpolant.
+\begin{align*}
+	P(x)	&=	\frac{x-1.25}{1-1.25} \frac{x-1.6}{1-1.6} (0) + 
+	\frac{x-1}{1.25-1} \frac{x-1.6}{1.25-1.6} (-0.707) + 
+	\frac{x-1}{1.6-1} \frac{x-1.25}{1.6-1.25} (-0.951)	\\
+	&=	\boxed{8.08(x-1)(x-1.6) - 4.5285(x-1)(x-1.25)} \\
+	P(1.4)	&=	-0.9181	\\
+	e_{abs}(1.4)	&=	0.0329
+\end{align*}
+
+Error bounds. For the linear interpolant, the 2nd derivative of $f(x)$ is $-\pi^2 \sin \pi x$ which is max at $\pi^2$. Then the error term is at maximum $|\frac{\pi^2}{2}(1.4-1)(1.4-1.25)| = 0.2960$. For the quadratic interpolant, the 3rd derivative of $f(x)$ is $\pi^3 \cos \pi x$ which is max at $pi^3$. Then the error term is at maximum $|\frac{\pi^3}{6}(1.4-1)(1.4-1.25)(1.4-1.6)| = 0.0620$.
+
+\question
+I used Mathematica and with years since 1960. The interpolating polynomial is as follows. 
+\begin{align*}
+	P(x)	&=	\boxed{-0.0025x^5 + 0.2866x^4 - 10.7937x^3 + 157.3120x^2 + 1642.7516x + 179323}
+\end{align*}
+Predicted population in 2020 in thousands is 283,108. It doesn't match well as it predicts population decrease, since with the polynomial approximation the trend curves sharply downwards after the last datapoint.
+
+
+\end{document}

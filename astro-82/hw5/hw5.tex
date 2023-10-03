@@ -1,0 +1,111 @@
+\documentclass{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Astro 82}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{5}
+\usepackage{siunitx}
+\begin{document}
+\maketitle
+
+
+\question
+Tidal disruption radius for the Earth to be pulled apart is at the point where an object on the surface of the Earth has as much force towards neutron star as it is towards center of the Earth. Set forces equal.
+\begin{align*}
+    F_{star}|_{surface}	&=	F_{earth}|_{surface}    \\
+    \frac{G(2M_\odot)m}{d^2}    &=  \frac{G(M_E)m}{R_E^2}   \\
+    \frac{2M_\odot}{d^2}    &=  \frac{M_E}{R_E^2}   \\
+    d    &=	\sqrt{\frac{2M_\odot}{M_E}} R_E	\\
+    d    &=	\boxed{\SI{5.2e9}{\metre}}	\\
+\end{align*}
+The asteroid Pallas would not be able to get closer as it gets pulled apart at the following (greater) distance. This makes sense as the gravitational force holding it together is weaker.
+\begin{align*}
+    d    &=	\sqrt{\frac{2M_\odot}{m}} r	\\
+    d    &=	\boxed{\SI{3.5e10}{\metre}}	\\
+\end{align*}
+
+\newpage
+\question
+Time differentials at that radius is warped by this amount.
+\begin{align*}
+    \frac{\Delta t_r}{\Delta t_{obs}}	&=	\left( 1 - \frac{R_{sch}}{r} \right)^{-1/2}	\\
+    \frac{\Delta t_r}{\Delta t_{obs}}	&=	\left( 1 - \frac{1}{3} \right)^{-1/2}	\\
+    \Delta t_r &=   1.22 \Delta t_{obs} \\
+\end{align*}
+This means that, since speed of light stays the same, wavelength must be increased, so frequency decreases.
+\begin{align*}
+    \frac{\lambda_r}{\Delta t_r}	&=  \frac{\lambda_{obs}}{\Delta t_{obs}}	\\
+    \frac{\lambda_r}{1.22 \Delta t_{obs}}	&=  \frac{\lambda_{obs}}{\Delta t_{obs}}	\\
+    1.22 \lambda_r    &= \lambda_{obs}	\\
+    \lambda    &=	c/\nu	\\
+    1.22 c/\nu_r    &= c/\nu_{obs}	\\
+    \nu_{obs}    &=	\SI{1}{\giga\hertz} / 1.22	\\
+    \nu_{obs}    &=	\boxed{\SI{0.82}{\giga\hertz}}	\\
+\end{align*}
+If he's on the opposite side of the orbit from you, that frequency is going to extend to infinity because photons would have to pass straight through the gravitational well.
+
+
+\newpage
+\question
+Characteristic age.
+\begin{align*}
+    P/\dot{P}	&=	\frac{\SI{0.033}{\second}}{\SI{4e-13}{\second\hertz}}	\\
+    P/\dot{P}    &=	\SI{8.33e10}{\second}	\\
+    P/\dot{P}    &=	\boxed{\SI{2650}{yr}}	\\    
+\end{align*}
+Rate of rotational energy loss. Ends up being about $10^5$ times as luminous as the sun.
+\begin{align*}
+    E_{rot}	&=	I\omega^2/2	\\
+    \dv{E_{rot}}{t} &=  \frac{I}{2} \dv{\omega^2}{t}   \\
+    \dv{E_{rot}}{t} &=  \frac{mr^2}{5} (2 \omega \dot{\omega})   \\
+    \omega    &=	\frac{2\pi}{P}	\\
+    \dot{\omega}    &=     \\
+    \dv{E_{rot}}{t} &=  \frac{1.4 M_\odot (\SI{1.2e4}{\metre})^2}{5} (2( \frac{2\pi}{P}) (-\frac{2\pi}{P^2} \dot{P}))   \\
+    \dv{E_{rot}}{t} &=  -\frac{1.4 M_\odot (\SI{1.2e4}{\metre})^2}{5} \frac{8\pi^2 \dot{P}}{P^3}   \\
+    \dv{E_{rot}}{t} &=  -\SI{6.84e31}{\joule\per\second}   \\
+    L   &=  \boxed{\SI{6.84e31}{\watt}}
+\end{align*}
+
+
+\question
+Surface density of the disc. Calculated by integrating perpendicular density over the z axis.
+\begin{align*}
+    \sigma	&=  2 \int_{0}^{\infty} \rho_0 e^{-z/z_0} \dd{z}	\\
+    \sigma	&=  2 \rho_0 z_0 e^{-z/z_0}|_0^{\infty}	\\
+    \sigma	&=  \boxed{2 \rho_0 z_0}	\\
+\end{align*}
+Evaluating a surface density.
+\begin{align*}
+    \sigma	&=	2 \rho_0 z_0	\\
+    \sigma	&=	2 (0.1 M_\odot \SI{}{pc^{-3}}) \SI{300}{pc}	\\
+    \sigma    &=	\boxed{\SI{1.19e32}{\kilogram\per pc^2}}	\\
+\end{align*}
+
+
+\question
+Acceleration towards plane at a height z above midplane. Infinite extent of disc means horizontal forces cancel out. Integrate over concentric discs to vertical axis as they simplify to point masses at center of disc. Note that the answer ends up constant and not a function of z, which makes sense as it's an infinite sheet.
+\begin{align*}
+    a   &=	\int_0^\infty \frac{Gm(r)}{R^2}	\dd{r} \\
+    a   &= G	\int_0^\infty \frac{2\pi r \sigma}{z^2 + r^2} \cos{\theta}	\dd{r} \\
+    a   &=  4\pi G \rho_0 z_0 \int_0^\infty \frac{r}{z^2 + r^2} \cos{\theta}	\dd{r} \\
+    a   &=  4\pi G \rho_0 z_0 \int_0^\infty \frac{r}{z^2 + r^2} \frac{z}{\sqrt{z^2+r^2}}	\dd{r} \\
+    a   &=  4\pi G \rho_0 z_0 z \int_0^\infty \frac{r}{(z^2 + r^2)^{3/2}} \dd{r} \\
+    a   &=  4\pi G \rho_0 z_0 z \frac{1}{z} \\
+    a   &=  \boxed{4\pi G \rho_0 z_0} \\
+\end{align*}
+
+
+\question
+Period of oscillation. Note that because acceleration is constant we can simply find the period by finding out how long it takes to complete a quarter of a cycle, that is, the star moves from its maximum z to the midplane.
+\begin{align*}
+    z   &=  \frac{1}{2}at_{1/4}^2 \\
+    z   &=  2\pi G \rho_0 z_0 t_{1/4}^2 \\
+    t_{1/4} &=  \sqrt{\frac{z}{2\pi G \rho_0 z_0}}  \\
+    P   &=  \boxed{\sqrt{\frac{8}{\pi \rho_0 G}} \sqrt{\frac{z}{z_0}}}
+\end{align*}
+
+
+
+
+
+\end{document}

@@ -1,0 +1,118 @@
+---
+title: "Stats 20 Notes"
+author: "Zooey Nguyen"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Chapter 3 Notes
+### Comparisons
+
+Relational operations are vectorised (function/operator is applied to each element of a vector individually).
+
+```{r}
+c(3,8) > 3
+```
+        
+Vectors are compared element by element.
+
+```{r}
+c(3,8) < c(1,4)
+```
+        
+Recycling is done on this as well (if a vector is shorter, R will just lengthen it until it matches by repeating the vector), but as always it will give you a warning when you do this.
+
+```{r}
+c(1,4) == c(5,3,1)
+```
+
+`any()` -- takes a logical vector, returns TRUE if any values are TRUE.
+
+```{r}
+first_ten_over_seven <- 1:10 > 7
+first_ten_over_seven
+any(1:10 > 7)
+```
+
+`all()` -- takes a logical vector, returns TRUE if all values are TRUE. You can use this to check if two vectors are equal (all elements match).
+
+```{r}
+first_ten_over_seven <- 1:10 > 7
+first_ten_over_seven
+all(1:10 > 7)
+
+first_five <- c(1,2,3,4,5)
+seq_five <- 1:5
+all(first_five == seq_five)
+```
+
+`identical()` takes two objects and returns TRUE if they are exactly identical. This is different from == because this assuredly returns a single logical value, but == may not work as expected in all cases for your intentions (like if your variables end up being different lengths you don't just get FALSE, or if one is NA, the result from == is NA).
+
+```{r}
+# first_five is doubles because c() generates that, seq() is integers
+identical(first_five,seq_five)
+
+```
+
+You can't use `NA`, `NULL`, or `NaN` with relational operators. If you want to check if something is one of those values, use `is.na()` (which works for both NA and NaN), `is.nan()`, and `is.null()`. Note that `is.null()` is not vectorised, while the other two are, since `NULL` is for values that are completely nonexistent, not just missing or errored out.
+
+For comparisons to `Inf`, use `is.infinite()` or `is.finite()`.
+
+### Logic
+
+Use a logical index to subset only the values that fulfill a particular criteria in the form `data[object to compare comparison]`. Like `running_times[running_times > 40]`. You can also create a logical index separately and subset as `data[logical_index]`.
+
+`which()` takes the logical index and returns a vector of only the indices of the TRUE values.
+
+`&&` and `||` operators are NOT vectorised, they compare only the first elements of every vector. also, they use short-circuit evaluation, evaluating from left to right, and only evaluate the right expression if necessary. That means if you have an error in the right side but the left side is enough for evaluation, R will not tell you what your error is. These are often preferred when only single logical values are expected.
+
+You can simply use `&` or `|` if you want a vectorised answer.
+
+### Discussion
+- debugging strats
+    - put `print`/`message` functions everywhere
+        - danger: if you put `print` in the wrong place (like within a function), you may change the return type of the function. using `message` will avoid this
+        - best to insert within control flows
+    - desk check -- stepping through your code and tracking your variables every step of the way
+        - tracking outside of the program, like you manually do this
+        - possible structure: table with the columns as variables and the rows are each step where a variable is changed. maybe make another column to note what happens in each row
+    - use the browser! `browser()`
+        - `help` will let you select from multiple options to track your program.
+        - `where` will show you the order of function calls.
+        - to go line-by-line, use `n` to take each step from the top of the program, here you can see the exact points your program is erroring
+    - rubber ducky debugging method
+    - always read the help files for your functions!!! `help(function_name)`
+        - always read the detail/notes sections for potentially unintuitive behaviors of a function
+- urgency levels, least to most
+    - `message(message)` - can help track at what point in the run the program is
+    - `warning(warning message)` - your code will work because you are making a decision about the output, but you anticipate that this may not be what the user means all the time
+    - `stop(error message)` - stops the program to handle your own exceptions, defensively code (you should ensure things are validated from the jump, not later on)
+- `function(...)` -- ellipsis ... works as a sort of variable, indicating the function will take  any number of unnamed args. ellipsis is preserved within the function when used.
+- `NA` is used when the value exists but is missing or unknown (Not Available). `NULL` is used when the value is nonexistent. `NaN` refers to indeterminate forms (Not a Number).
+
+## Week 5 - Chapter 6
+
+### Lecture 2
+
+- installing packages
+    - `search` will show you the paths of packages that R will search when you try and access an object, shows all the currently loaded packages and the order of precedence
+    - base package will be last in the order of precedence, meaning some packages will override others if they have the same function name
+    - install package by using `install.packages("PACKAGENAME", "PACKAGENAME", etc.)`
+    - must reload libraries with each new session with `library(PACKAGENAME)`
+    - fuzzy search -- search through all documentation with a keyword if you don't know what package you want to load with `??KEYWORD`
+    - function -- search one of your currently-loaded functions with `?FUNCTIONNAME` or `help(FUNCTIONNAME)`
+    - package documentation -- `library(help = "FUNCTIONNAME")`
+    - create local copy of a package's dataset by loading it with `data(DATASETNAME)`
+    - `head(dataset, n = numberRows)` and `tail(same params)` will give you the first/last n rows of the dataset
+- data frames
+    - allows for COLUMNS of different types
+    - declare dataframe with `data.frame("Name1"=vec1, "Name2"=vec2, etc.)` which will column-bind the vectors. if you don't include the column names, it'll come up with a weird default one.
+    - vectors must be of equal length to be bound
+    - coerce matrix to dataframe with `as.data.frame(matrixname)`
+    - you can add new vectors and dataframes with cbind and rbind as usual, but the names need to match
+    - dataframes are factors!! by default the dataframe coerces CHARACTER vectors into FACTORS, so when you assign things to parts in the dataframe you're really assigning levels
+        - if you set `data.frame(something, stringsAsFactors=FALSE)` means characters are preserved in the dataframe
+        

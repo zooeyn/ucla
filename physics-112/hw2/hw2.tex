@@ -1,0 +1,108 @@
+\documentclass[newpage]{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Physics 112}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{2}
+\begin{document}
+\maketitle
+
+
+\question
+Free energy of two-state system.
+\begin{align*}
+    F	&=	-\tau \ln{Z}	\\
+        &=	\boxed{-\tau \ln{1 + e^{-\epsilon/\tau}}}
+\end{align*}
+Energy from F.
+\begin{align*}
+    U	&=	-\tau^2 \pdv{(F/\tau)}{\tau}	\\
+        &=	-\tau^2	\pdv{\ln{1 + e^{-\epsilon/\tau}}}    \\
+        &=	\frac{\tau^2 \frac{\epsilon}{\tau^2}e^{-\epsilon/\tau}}{1+e^{-\epsilon/\tau}}	\\
+        &=	\boxed{\frac{\epsilon e^{-\epsilon/\tau}}{1+e^{-\epsilon/\tau}}}
+\end{align*}
+Entropy from F.
+\begin{align*}
+    \sigma	&=	\pdv{F}{\tau} 	\\
+        &=	\ln{(1+e^{-\epsilon/\tau})} + \frac{\tau \frac{\epsilon}{\tau^2} e^{-\epsilon/\tau}}{1+e^{-\epsilon/\tau}}	\\
+        &=	\boxed{\ln{( 1+e^{-\epsilon/\tau})} + \frac{\epsilon e^{-\epsilon/\tau}}{\tau (1 + e^{-\epsilon/\tau})}}
+\end{align*}
+
+
+\question
+Partition function.
+\begin{align*}
+    Z	&=	\sum_s \binom{N}{N^{+}} e^{2smB/\tau}	\\
+        &=	\sum_s \frac{N!}{s!(N-s)!} (e^{2mB/\tau})^{s-N/2}   \\
+        &=	\sum_s \binom{N}{s} (e^{2mB/\tau})^s \vdot e^{-mBN/\tau}	\\
+        &=	(1 + e^{2mB/\tau})^N (e^-mBN/\tau)	\\
+        &=	(1 + e^{2mB/\tau})^N (e^-mB/\tau)^N	\\
+        &=	(e^{-mB/\tau} + e^{mB/\tau})^N	\\
+        &=	\boxed{\cosh^N{(mB/\tau)}}	\\
+\end{align*}
+Magnetisation.
+\begin{align*}
+    M	&=	- \tau^2 \pdv{\tau} \ln Z	\\
+        &=	- \tau^2 \pdv{\tau}\ln \cosh^N{(mB/\tau)}	\\
+        &=	- N \tau^2 \pdv{\tau} \ln \cosh{(mB/\tau)}	\\
+        &=	- N \tau^2 \frac{\sinh{(mB/\tau)}\frac{-m}{\tau^2}}{\cosh{(mB/\tau)}}	\\
+        &=	\boxed{Nm \tanh{(mB/\tau)}}	\\
+\end{align*}
+Magnetic susceptibility.
+\begin{align*}
+    \chi	&=	\pdv{M}{B}	\\
+        &=	Nm \sech^2{(mB/\tau)} \frac{m}{\tau}	\\
+        &=	\boxed{\frac{Nm^2}{\tau} \sech^2{(mB/\tau)}}	\\
+\end{align*}
+Free energy.
+\begin{align*}
+    F	&=	-\tau \ln{Z}	\\
+        &=	-\tau \ln \cosh^N (mB/\tau)	\\
+        &=	-N\tau \ln \cosh (mB/\tau)	\\
+        &=	-N\tau \ln \frac{1}{\sqrt{1-\tanh^2 (mB/\tau)}}	\\
+        &=  \boxed{-N\tau \ln \left(\frac{1}{\sqrt{1-x^2}}\right)}	\\
+\end{align*}
+Magnetic susceptibility in the limit.
+\begin{align*}
+    \lim_{mB \ll \tau} \chi	&=	\lim_{mB/\tau \rightarrow 0} \frac{Nm^2}{\tau} \sech^2{(mB/\tau)}	\\
+        &=	\frac{Nm^2}{\tau} \sech^2{0}	\\
+        &=	\boxed{\frac{Nm^2}{\tau}}	\\
+\end{align*}
+
+
+\question
+Partition function first.
+\begin{align*}
+    Z   &=	\sum_s e^{-s\hbar \omega / \tau}	\\
+        &=	(1 - e^{-\hbar \omega / \tau})^{-1}	\\
+\end{align*}
+Free energy.
+\begin{align*}
+    F	&=	-\tau \ln (1 - e^{-\hbar \omega / \tau})^{-1}	\\
+        &=	\boxed{\tau \ln (1 - e^{-\hbar \omega / \tau})}	\\
+\end{align*}
+Entropy.
+\begin{align*}
+    \sigma	&=	\pdv{F}{\tau}	\\
+        &=	-\left( \ln (1 - e^{-\hbar \omega / \tau}) + \frac{\tau e^{-\hbar \omega / \tau} (\hbar \omega / \tau) }{1 - e^{-\hbar \omega / \tau}} \right)	\\
+        &=	-\frac{(\hbar \omega / \tau) e^{-\hbar \omega / \tau} }{1 - e^{-\hbar \omega / \tau}} - \ln (1 - e^{-\hbar \omega / \tau})	\\
+        &=	\frac{\hbar \omega}{\tau} \frac{1 - e^{-\hbar \omega / \tau} - 1}{1 - e^{-\hbar \omega / \tau}} - \ln (1 - e^{-\hbar \omega / \tau})	\\
+        &=	\boxed{\frac{\hbar \omega / \tau}{e^{-\hbar \omega / \tau} - 1} - \ln (1 - e^{-\hbar \omega / \tau})}	\\
+\end{align*}
+
+
+\question
+Get energy in terms of partition function, note $\tau = 1/\beta$ so $\pdv{\tau} = -\frac{1}{\tau^2} \pdv{\beta}$.
+\begin{align*}
+    Z	&=	\sum_s e^{\epsilon_s \beta}	\\
+    U   &=	\frac{1}{Z} \sum_s \epsilon_s	e^{\epsilon_s \beta}    \\
+        &=	\frac{\pdv{B} Z }{Z}	\\
+    \pdv{U}{\tau}    &=	-\frac{1}{\tau^2} \pdv{U}{\beta}	\\
+        &=	-\frac{1}{\tau^2} \pdv{\beta} \left(\frac{\pdv{\beta} Z }{Z}\right)	\\
+        &=	-\frac{1}{\tau^2 Z^2} \left(\pdv[2]{Z}{\beta} \vdot Z - (\pdv{Z}{\beta})^2 \right)	\\
+        &=	-\frac{1}{\tau^2} \left(\frac{\pdv[2]{Z}{\beta}}{Z} - (\frac{\pdv{Z}{\beta}}{Z})^2 \right)	\\
+    \tau^2 \pdv{U}{\tau}    &=  \boxed{\langle \epsilon^2 \rangle - \langle \epsilon \rangle^2}\\
+\end{align*}
+
+
+\end{document}

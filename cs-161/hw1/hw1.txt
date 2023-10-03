@@ -1,0 +1,109 @@
+CS 161
+Homework 1
+Zooey Nguyen
+October 16, 2020
+
+********************************************************************************
+PROBLEM 1
+For a large value of n like 1000, my program pauses for quite a while before
+outputting the result after almost a minute (or a few). This is because my
+function is recursive, so the stack grows by a lot due to all the function calls
+before it is able to process anything.
+********************************************************************************
+TEST CASES: PROBLEM 1
+[1]> (defun PAD (N)
+    (if (or (eql N 0) (eql N 1) (eql N 2))
+        1
+        (+ (PAD (- N 1)) (PAD (- N 2)) (PAD (- N 3)))
+    )
+)
+PAD
+[2]> (PAD 0)
+1
+[3]> (PAD 1)
+1
+[4]> (PAD 2)
+1
+[5]> (PAD 3)
+3
+[6]> (PAD 4)
+5
+[7]> (PAD 5)
+9
+[8]> (PAD 6)
+17
+[9]> (PAD 7)
+31
+[10]> (PAD 8)
+57
+[11]> (PAD 9)
+********************************************************************************
+TEST CASES: PROBLEM 2
+[12]> (defun SUMS (N)
+    (cond   ((< N 0) "Invalid negative input.")
+            ((or (eql N 0) (eql N 1) (eql N 2)) 0)
+            (t (+ 2 (SUMS (- N 1)) (SUMS (- N 2)) (SUMS (- N 3))))
+    )
+)
+SUMS
+[13]> (SUMS 0)
+0
+[14]> (SUMS 1)
+0
+[15]> (SUMS 2)
+0
+[16]> (SUMS 3)
+2
+[17]> (SUMS 4)
+4
+[18]> (SUMS 5)
+8
+[19]> (SUMS 6)
+16
+[20]> (SUMS 7)
+30
+[21]> (SUMS 8)
+56
+[22]> (SUMS 9)
+104
+********************************************************************************
+TEST CASES: PROBLEM 3
+[23]> (defun ANON (TREE)
+    (cond   ((not TREE) nil) ; includes empty list, returns nil
+            ((atom TREE) 0)
+            (t  (cons ; cons will not include nil
+                    (ANON (car TREE))
+                    (ANON (cdr TREE))
+                )
+            )
+    )
+)
+ANON
+[24]> (ANON '42)
+0
+[25]> (ANON 'FOO)
+0
+[26]> (ANON '(((L E) F) T))
+(((0 0) 0) 0)
+[27]> (ANON '(5 FOO 3.1 -0.2))
+(0 0 0 0)
+[28]> (ANON '(1 (FOO 3.1) -0.2))
+(0 (0 0) 0)
+[29]> (ANON '(((1 2) (FOO 3.1)) (BAR -0.2)))
+(((0 0) (0 0)) (0 0))
+[30]> (ANON '(R (I (G (H T)))))
+(0 (0 (0 (0 0))))
+********************************************************************************
+SOURCES
+http://www.lispworks.com/documentation/lw50/CLHS/Body/f_format.htm: Learning how
+to use format when I needed to quickly run test cases by printing them out
+directly from the homework file.
+https://stackoverflow.com/questions/33029165/substituting-item-to-every-occurance-in-a-list:
+Used the LISP functions mentioned in Frank Zalkow's code for my ANON function.
+Helped me understand that nil could be returned without being added to the tree
+if cons was used to build tree. https://www.wikiwand.com/en/Cons: Understanding
+how cons interacts with nil, in contrast to list, which I was trying to use
+before. http://clhs.lisp.se/Body/f_null.htm: Discovering the use of null instead
+of not, for detecting non-elements as well as empty sets and marking them as
+nil.
+********************************************************************************

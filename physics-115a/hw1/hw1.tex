@@ -1,0 +1,41 @@
+\documentclass{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Physics 115A}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{1}
+\usepackage{siunitx}
+\begin{document}
+\maketitle
+
+\question
+Deriving the energy density for wavelength.
+\begin{align*}
+    u(\lambda, T)	&=  p(c/\lambda, T)	\\
+    &=  \frac{8\pi(c/\lambda)^2}{c^3} \frac{h(c/\lambda)}{e^{hc/\lambda kT}-1}	\\
+    &=  \frac{8\pi c^2}{\lambda^2} \frac{hc/\lambda}{e^{hc/\lambda kT}-1}	\\
+    &=  \frac{8\pi ch}{\lambda^5} \frac{1}{e^{hc/\lambda kT}-1}
+\end{align*}
+$\lambda_{max}$ occurs when $\dv{u}{\lambda} = 0$.
+\begin{align*}
+    \dv{u}{\lambda}	&=	0	\\
+    8\pi hc \left(-\frac{5}{\lambda^6\left(e^{\frac{hc}{k\lambda T}}-1\right)}+\frac{hc e^{\frac{ch}{k\lambda T}}}{k\lambda^7T\left(e^{\frac{ch}{k\lambda T}}-1\right)^2}\right)   &=  0   \\
+    \left(\frac{1}{\lambda^6 (e^{\frac{hc}{k\lambda T}}-1)^2}\right)\left(-5e^{\frac{hc}{k\lambda T}}+5+\frac{hc}{k\lambda T}e^{\frac{hc}{k\lambda T}}\right)   &=  0   \\
+    5-\left(5-\frac{hc}{k\lambda T}\right)e^{\frac{hc}{k\lambda T}}   &=  0    \\
+    5-5e^x+xe^x    &=   0	\\
+    x   &=  \frac{hc}{k\lambda T}   = 5 = const.    \\
+    \lambda_{max} T   &=  \frac{hc}{5k}    =	const.	\\
+\end{align*}
+Getting Wien's constant.
+\begin{align*}
+    \frac{hce^5}{5k}	&=	\frac{(\SI{6.626e-34}{\joule\second})(\SI{3e8}{\metre/\second})e^5}{5(\SI{1.38e-23}{\joule/\kelvin})}	\\
+    &=	\SI{2.88e-3}{\metre\kelvin}	\\
+\end{align*}
+Total energy is integral over all wavelengths.
+\begin{align*}
+    E   &=  \int_0^\infty \frac{8\pi ch}{\lambda^5} \frac{1}{e^{hc/\lambda kT}-1} \dd{\lambda}	\\
+        &\propto    T^4	\\
+\end{align*}
+
+
+\end{document}

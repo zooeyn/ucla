@@ -1,0 +1,64 @@
+\documentclass[newpage]{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Math 151A}
+\newcommand{\hwtype}{Homework Pen and Paper}
+\newcommand{\hwnum}{3}
+\begin{document}
+\maketitle
+
+\question
+Use NM to get $p_2$.
+\begin{align*}
+	p_{n+1}    &=	p_n - \frac{-p_n^3 - \cos p_n}{-3p_n^2 + \sin p_n}
+	= p_n + \frac{\cos p_n + p_n^3}{\sin p_n - 3p_n^2}  \\
+	p_1    &=	(-1) + \frac{\cos (-1) + (-1)^3}{\sin (-1) - 3(-1)^2}
+	=	-1 + \frac{0.5403 - 1}{-0.8414 - 3}
+	=	(-0.8803)	\\
+	p_2	&=	(-0.8803) + \frac{\cos (-0.8803) + (-0.8803)^3}{\sin (-0.8803) - 3(-0.8803)^2}
+	= -0.8803 + \frac{0.6369 - 0.6822}{-0.7709 - 2.3248}
+	= \boxed{-0.8657}
+\end{align*}
+If we use $p_0 = 0$, the denominator $\sin(0) - 3(0)^2$ becomes 0, and we cannot iterate.
+
+\question
+Use SM to get $p_3$.
+\begin{align*}
+	p_{n+1}	&=	p_n - \frac{(-p_n^3 - \cos p_n)(p_n - p_{n-1})}{(-p_n^3 - \cos p_n) - (-p_{n-1}^3 - \cos p_{n-1})}	\\
+	p_2	&=	(0) - \frac{(-(0)^3 - \cos (0))((0) - (-1))}{(-(0)^3 - \cos (0)) - (-(-1)^3 - \cos (-1))}	=	-0.6850	\\
+	p_3	&=	(-0.6850) - \frac{(-(-0.6850)^3 - \cos (-0.6850))((-0.6850) - (0))}{(-(-0.6850)^3 - \cos (-0.6850)) - (-(0)^3 - \cos (0))} = \boxed{-1.2523}	\\
+\end{align*}
+
+\question
+Showing linear convergence of Newton's method.
+\begin{align*}
+	p_{n+1}-p	&=	(p_n-p) \frac{f(p_n)}{f'(p_0)}	\\
+	\lim \frac{|p_{n+1}-p|}{|p_n-p|} &= \lim \frac{|f(p_n)|}{|f'(p_0)|} = \frac{|f(p)|}{|f'(p_0)|} \rightarrow \text{Positive finite constant}
+\end{align*}
+
+\question
+Secant method for solving. Note solution to five digits from a computer is $1.82938\dots$ and that the secant method took about five steps.
+\begin{align*}
+	p_{n+1}	&=	p_n - \frac{(e^p_n + 2^{-p_n} + 2\cos(p_n) - 6)(p_n - p_{n-1})}{e^p_n + 2^{-p_n} + 2\cos(p_n) - 6 - ( e^p_{n-1} + 2^{-p_{n-1}} + 2\cos(p_{n-1}) - 6)}	\\
+	p_{n+1}	&=	p_n - \frac{(e^p_n + 2^{-p_n} + 2\cos(p_n) - 6)(p_n - p_{n-1})}{e^p_n - e^p_{n-1} + 2^{-p_n} -2^{-p_{n-1}} + 2\cos(p_n) - 2\cos(p_{n-1})}	\\
+	p_0	&=	1	\\
+	p_1	&=	2	\\
+	p_2	&=	2 - \frac{(e^2 + 2^{-2} + 2\cos(2) - 6)(2 - 1)}{e^2 - e^1 + 2^{-2} -2^{-1} + 2\cos(2) - 2\cos(1)}	= 1.67830	\\
+	p_3	&=	1.67830 - \frac{(e^{1.67830} + 2^{-1.67830} + 2\cos(1.67830) - 6)(1.67830 - 2)}{e^{1.67830} - e^2 + 2^{-1.67830} -2^{-2} + 2\cos(1.67830) - 2\cos(2)}	=	1.80810 \\
+	p_4	&=	1.80810 - \frac{(e^{1.80810} + 2^{-1.80810} + 2\cos(1.80810) - 6)(1.80810 - 1.67830)}{e^{1.80810} - e^{1.67830} + 2^{-1.80810} -2^{-1.67830} + 2\cos(1.80810) - 2\cos(1.67830)}	=	1.83230 \\
+	p_5	&=	1.83230 - \frac{(e^{1.83230} + 2^{-1.83230} + 2\cos(1.83230) - 6)(1.83230 - 1.80810)}{e^{1.83230} - e^{1.80810} + 2^{-1.83230} -2^{-1.80810} + 2\cos(1.83230) - 2\cos(1.80810)}	=	1.82933 \\
+	p_6	&=	1.82933 - \frac{(e^{1.82933} + 2^{-1.82933} + 2\cos(1.82933) - 6)(1.82933 - 1.83230)}{e^{1.82933} - e^{1.83230} + 2^{-1.82933} -2^{-1.83230} + 2\cos(1.82933) - 2\cos(1.83230)}	=	\boxed{1.82938} \\
+\end{align*}
+
+\question
+Show order of convergence as function of $e_n$'s.
+\begin{align*}
+	e_{n+1}	&=	\lambda e_n^\alpha	\\
+	e_n	&=	\lambda e_{n-1}^\alpha	\\
+	\frac{e_{n+1}}{e_n}	&=	\frac{\lambda e_n^\alpha}{\lambda e_{n-1}^\alpha} = \left(\frac{e_n}{e_{n-1}}\right)^\alpha	\\
+	\log \left(\frac{e_{n+1}}{e_n}\right)	&=	\alpha \log \left(\frac{e_n}{e_{n-1}}\right)	\\
+	\alpha	&=	\boxed{\frac{\log(e_{n+1}/e_n)}{\log(e_n/e_{n-1})}}
+\end{align*}
+
+
+\end{document}

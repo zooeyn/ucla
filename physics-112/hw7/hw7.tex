@@ -1,0 +1,124 @@
+\documentclass[newpage]{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Physics 112}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{7}
+\usepackage{siunitx}
+\begin{document}
+\maketitle
+
+8, 11, 12
+\question
+Density of orbitals of free electron in one dimension. Recall electrons have two spin states.
+\begin{align*}
+    \Psi        &=	A\sin{\frac{n\pi x}{L}}	\\
+    \epsilon_n  &=  \frac{\hbar^2}{2m} \left(\frac{\pi}{L}\right)^2 n^2 \\
+    N   &=  2 \int_{0}^{n_f} \dd{n_x}
+        =	2n_F	\\
+    n_F &=  \frac{N}{2} \\
+    \epsilon_F  &=	\frac{\hbar^2}{2m} \left(\frac{\pi}{L}\right)^2 \left(\frac{N}{2}\right)^2	\\
+    N    &= \frac{L}{\pi\hbar} \sqrt{8m \epsilon_F} \\
+    d(\epsilon) &=  \dv{N}{\epsilon}  
+                =  \frac{2\sqrt{2m} L}{\pi\hbar} \frac{1}{2\sqrt{\epsilon}} 
+                =  \boxed{\frac{L}{\pi} \left(\frac{2m}{\hbar^2 \epsilon}\right)^{1/2}}
+\end{align*}
+Density of orbitals of free electron in two dimensions. Recall electrons have two spin states.
+\begin{align*}
+    \Psi        &=	A\sin{\frac{n_x \pi x}{L}}\sin{\frac{n_y \pi y}{L}}	\\
+    \epsilon_n  &=  \frac{\hbar^2}{2m} \left(\frac{\pi}{L}\right)^2 (n_x^2 + n_y^2) \\
+    n^2    &=	n_x^2 + n_y^2	\\
+    N   &=  2 \int_{0}^{n_f} \dd{n_x} \dd{n_y}
+        =  2 \frac{1}{4}\int_{0}^{n_f} (2 \pi n) \dd{n}
+        =  \frac{\pi n_F^2}{2} \\
+    n_F    &=	\sqrt{\frac{2N}{\pi}}	\\
+    \epsilon_F  &=	\frac{\hbar^2}{2m} \left(\frac{\pi}{L}\right)^2 \frac{2N}{\pi}	\\
+    N    &= \frac{mL^2 \epsilon_F}{\pi\hbar^2} \\
+    d(\epsilon) &=  \dv{N}{\epsilon}  
+                =  \frac{mL^2}{\pi\hbar^2}
+                =  \boxed{\frac{mA}{\pi\hbar^2}}
+\end{align*}
+
+
+\question
+Fermi energy in limit of $\epsilon \gg mc^2$.
+\begin{align*}
+    \epsilon_n    &=  pc  \\
+    \epsilon_n   &=  \frac{\hbar n \pi c}{L}  \\
+    N   &=  2 \int_{0}^{n_f} \dd{n_x} \dd{n_y} \dd{n_z} = 2 \frac{1}{8} \int_{0}^{n_f} 4\pi n^2 \dd{n} = \frac{\pi n^3}{3} \\
+    n_F &=  \left(\frac{3N}{\pi}\right)^{1/3}   \\
+    \epsilon_F  &=  \frac{\hbar \pi c}{L} \left(\frac{3N}{\pi}\right)^{1/3}
+    =  \hbar \pi c \left(\frac{3N}{\pi L^3}\right)^{1/3}
+    =  \hbar \pi c \left(\frac{3N}{\pi V}\right)^{1/3}
+    =  \boxed{\hbar \pi c \left(\frac{3n}{\pi}\right)^{1/3}}
+\end{align*}
+Total energy of ground state.
+\begin{align*}
+    U_0	&=	2 \sum_{n=1}^{n_F} \epsilon_n
+    = 2 \frac{1}{8} \int_{0}^{n_F} 4\pi n^2 \frac{\hbar n \pi c}{L} \dd{n}
+    = \int_{0}^{n_F} \frac{\hbar \pi^2 c}{L} n^3 \dd{n}
+    = \frac{\hbar \pi^2 c}{4L} n_F^4
+    = \frac{\hbar \pi^2 c}{4L} \left(\frac{\epsilon_F L}{\hbar \pi c}\right)^4
+    = \boxed{\frac{3}{4} N \epsilon_F}
+\end{align*}
+
+
+\question
+Pressure of Fermi gas in ground state.
+\begin{align*}
+    U_0	&=	\frac{3}{5} N \frac{\hbar^2 (3 \pi^2)^{2/3}}{2m} \left(\frac{N}{V}\right)^{2/3}	\\
+    p   &=  -\dv{U_0}{V}
+    =   - \frac{3}{5} N \frac{\hbar^2 (3 \pi^2)^{2/3}}{2m} \dv{V} \left(\frac{N}{V}\right)^{2/3}
+    =   - \frac{3}{5} \frac{\hbar^2 (3 \pi^2)^{2/3}}{2m} N^{5/3} \frac{-2}{3} V^{-5/3}
+    =   \boxed{\frac{(3 \pi^2)^{2/3} \hbar^2}{5m} \left(\frac{N}{V}\right)^{5/3}}
+\end{align*}
+
+
+\question
+Fermi sphere parameters for $^3 He$.
+\begin{align*}
+    \epsilon_F    &= \frac{\hbar^2}{2m} (3\pi^2 n)^{2/3}
+    = \frac{\hbar^2}{2(3 u)} \left(3\pi^2 \left(\frac{\SI{0.081}{\gram/\centi\metre^3}}{3 u}\right)\right)^{2/3}
+    = \boxed{\SI{4.2e-4}{\electronvolt}} \\
+    v_F &=  \frac{2 \epsilon_F}{m}
+    = \frac{2 \SI{4.2e-4}{\electronvolt}}{3 u} 
+    = \boxed{\SI{16}{\metre/\second}} \\
+    T_F &=  \frac{\epsilon_F}{k_B}
+    = \boxed{\SI{4.9}{\kelvin}}
+\end{align*}
+Heat capacity at lower temperature, use electron gas equation.
+\begin{align*}
+    C_{el}	&=	\frac{\pi^2}{3}(\frac{3}{2\epsilon_F}) N k_B T  \\
+            &=	\frac{\pi^2}{\SI{8.4e-4}{\electronvolt}} N k_B T
+\end{align*}
+
+
+\question
+Order of magnitude of gravitational energy for white dwarf.
+\begin{align*}
+    U    &=	- \int_0^R \frac{GMm}{r^2} \dd{r}
+    =	- \int_0^R \frac{G(\frac{4}{3}\pi r^3 \rho)(4\pi r^2 \rho)}{r^2} \dd{r}
+    =	- \int_0^R \frac{G(\frac{4}{3}\pi r^3 \rho)}{r^2} 4\pi r^2 \dd{r} \\
+    &=	- \frac{16G\pi\rho^2 R^5}{15}
+    =	- \frac{16G\pi(\frac{M}{\frac{4}{3}\pi R^3})^2 R^5}{15}
+    =   \boxed{- \frac{3GM^2}{5R}}
+\end{align*}
+Same order of magnitude for kinetic and potential energy.
+\begin{align*}
+    U	&=    E		\\
+    - \frac{3GM^2}{5R}	&=  \frac{\hbar^2 M^{5/3}}{mM_H^{5/3} R^2} \\
+    M^{1/3} R   &\propto  \frac{\hbar^2}{Gm_e M_H^{5/3}}
+    =   \frac{\SI{1.82e-22}{\metre\gram^2}}{(\SI{1.67e-24}{\gram})^{5/3}}
+    =   \SI{7.7e20}{\centi\metre\gram^{1/3}}   \\
+    &\approx \SI{e20}{\centi\metre \gram^{1/3}}
+\end{align*}
+Density if mass is $M_\odot$.
+\begin{align*}
+    \rho	&=  \frac{M_\odot}{4\pi R^3/3}
+            =   \frac{3M_\odot}{4\pi (\SI{e20}{\centi\metre\gram^{1/3}}/M_\odot^{1/3})^3}
+            =   \frac{3(\SI{2e33}{\gram})}{4\pi (\SI{e60}{\centi\metre^3\gram})/(\SI{2e33}{\gram})}
+            =   \boxed{\SI{e6}{\gram/\centi\metre^3}}
+\end{align*}
+
+
+\end{document}

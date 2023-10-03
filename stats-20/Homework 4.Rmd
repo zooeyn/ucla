@@ -1,0 +1,189 @@
+---
+title: "Homework 4"
+author: "Zooey Nguyen"
+date: "10/28/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+
+```{r}
+# Part a
+waffle_vec <- c(3,6,3,1,2,7,6,4,2,4,9,6,5,6,2,4,3,2,2,4,4,6,1,4,6,1,3,4)
+waffles <- matrix(waffle_vec, byrow=TRUE, ncol=7)
+
+# Part b
+rownames(waffles) <- c(1:4)
+colnames(waffles) <- c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+
+# Part c
+mean(waffles[,colnames(waffles) == "Wednesday"])
+
+# Part d
+IQR(waffles[rownames(waffles) == 3,])
+
+# Part e
+sum(waffles)
+```
+
+## Question 2
+
+```{r}
+# Part a
+last_mean <- function(x) {
+  mean(x[,ncol(x)])
+}
+
+# Part b
+last_mean(waffles)
+
+# Part c
+last_mean(t(waffles))
+
+# Part d
+last_mean(t(waffles)[1:2,])
+
+```
+
+## Question 3
+```{r}
+# Part a
+x <- c(61, 62, 63, 64, 66, 68)
+y <- c(104, 110, 141, 125, 170, 160)
+
+# Part b
+x_mean <- mean(x)
+y_mean <- mean(y)
+x_stdev <- sd(x)
+y_stdev <- sd(y)
+
+# Part c
+r <- cor(x, y)
+
+# Part d
+b <- r*y_stdev/x_stdev
+a <- y_mean - b*x_mean
+a
+b
+print("The equation of the regression line is y = -442.88 + 9.02x.")
+predictions <- a + b*x
+predictions
+```
+
+```{r}
+# Part e
+X <- cbind(1, x)
+
+# Part f
+solve(t(X) %*% X) %*% t(X) %*% y
+```
+
+The values resulting in part f are identical to those given in part d, where the first value of the output matrix is the intercept a, and the second value is the slope b.
+
+The slope coefficient corresponds to how many more pounds one would expect to observe weight to increase by for every one inch of height increase.
+
+## Question 4
+
+```{r}
+# Part a
+`%m%` <- function(A, B) {
+  m <- nrow(A)
+  p <- ncol(B)
+  C <- matrix(nrow = m, ncol = p)
+  for (i in 1:m) {
+    for (j in 1:p) {
+      C[i,j] <- sum(A[i,] * B[,j])
+    }
+  }
+  C
+}
+
+# Part b
+X <- matrix(1:6, byrow=TRUE, nrow=2)
+Y <- matrix(1:9, nrow=3)
+X %*% Y
+X %m% Y # identical!
+```
+
+## Question 5
+```{r}
+# Part a
+`%^%` <- function(A, k) {
+  C <- diag(nrow(A))
+  if (k > 0) {
+    for (i in 1:k) {
+      C <- C %m% A
+    }
+  }
+  C
+}
+
+# Part b
+Z <- matrix(c(0.7, 0.2, 0.1, 0.2, 0.6, 0.4, 0.1, 0.2, 0.5), nrow = 3)
+Z %^% 0
+Z %^% 5
+Z %^% 50
+Z %^% 500
+```
+
+## Question 6
+```{r}
+# Part a
+x <- rep(rep(c(0, 1, 2), c(3, 4, 1)), 5)
+x <- factor(x)
+levels(x)
+
+levels(x) <- c("Male", "Female", "Non-binary")
+levels(x)
+
+# Part b
+x <- as.numeric(x)
+```
+All the values in the new vector are increased by 1 compared to before because the category numbering in a factor start at 1 regardless of what we originally had in our to-be-coerced vector.
+
+## Question 7
+Assuming that the columns are each choice and the rows correspond to each voter and their rankings for each choice across the columns.
+    
+    function results(matrix X) {
+      Initialise matrix to store results (percentage of first-votes) of each round of elimination.
+      Until one candidate's column remains {
+        Get vector of number of first-votes across candidates.
+        If first-votes vector does not contain a number over majority:
+          Identify failed candidate with fewest first-votes.
+          For each row which ranked failed candidate as first {
+            Subtract 1 from entire row of rankings.
+            (This bumps up all its rankings by 1 since that's what they would be absent the failed candidate.)
+          }
+          Set column of ranks of failed candidate to Inf.
+      }
+      Output the elimination matrix.
+    }
+
+```{r}
+# Part b
+tally_rcv <- function(X) {
+  cands <- ncol(X)
+  final_ranks <- matrix(nrow = cands, ncol = cands)
+  colnames(final_ranks) <- colnames(X)
+  for (i in 1:cands) {
+    # outputs rows and the column that is their first choice.
+    firsts <- which(X == 1, arr.ind = TRUE)
+    # check number of people who voted each candidate first, then find the candidate who was voted first least.
+    t <- table(factor(firsts[,2]))
+    final_ranks[i, as.numeric(names(t))] <- t/sum(t)
+    f_cand <- as.numeric(names(which(t == min(t)))) # index of failed candidate
+    f_rows <- firsts[which(firsts[,2] == f_cand)]
+    for (row in f_rows) {
+      X[row,] <- X[row,] - 1
+    }
+    X[,f_cand] <- Inf
+  }
+  knitr::kable(final_ranks)
+}
+load("votes.RData")
+tally_rcv(votes)
+```

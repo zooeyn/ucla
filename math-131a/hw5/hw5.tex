@@ -1,0 +1,51 @@
+\documentclass{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Math 131A}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{5}
+\begin{document}
+\maketitle
+
+
+\question
+\begin{alphaparts}
+	\questionpart \fbox{True.} Given $\epsilon > 0$, there are $\delta_f > 0$ and $\delta_g > 0$ such that for some $x, y \in S$, $|x-y| < \delta_f \Rightarrow |f(x) - f(y)| < \epsilon/2$ and $|x-y| < \delta_g \Rightarrow |g(x) - g(y)| < \epsilon/2$. If $|x-y| < \min(\delta_f, \delta_g)$, then $|(f+g)(x) - (f+g)(y)| \le |f(x) - f(y)| + |g(x) - g(y)| < \epsilon$. Thus $f+g$ is uniformly continuous on $S$ for $\delta = \min(\delta_f, \delta_g)$.
+	\questionpart \fbox{False.} Let $f(x) = g(x) = x$, then $(fg)(x) = x^2$ which is not uniformly continuous. Consider $\epsilon = 1$, then there must be $\delta$ such that $|x - y| < \delta \Rightarrow |x^2 - y^2| < 1$, so if we take $x = x, y = x+\frac{\delta}{2}$ it needs to be true that $|x^2 - (x+\frac{\delta}{2})^2| = |\delta x + \frac{\delta^2}{2}| < 1$. But this does not hold for every x, simply choose $x = 1/\delta$ and the left side becomes greater than one.
+	\questionpart \fbox{True.} Given $\epsilon > 0$, we have $|x-y| < \delta_g \Rightarrow |g(x)-g(y)| < \epsilon$. Given $\delta_g$, we have $|x-y| < \delta_f \Rightarrow |f(x) - f(y)| < \delta_g$. Thus for any $\epsilon > 0$, we have $\delta_f$ such that $|x-y| < \delta_f \Rightarrow |g(f(x)) - g(f(y))| < \epsilon$. 
+\end{alphaparts}
+
+
+\question
+
+
+\question
+If $f$ is continuous at $a$, then for any $\epsilon > 0$, there is $\delta$ so that $|x - a| < \delta \Rightarrow |f(x) - f(a) < \epsilon|$. By definition of a limit we get that $\lim_{I \ni x \to a} = f(a)$. This then implies for some, since for some $\eta > 0, a \in I = (a + \eta, a - \eta) \in \mathbb{R}$, that $\lim_{x \to a} = f(a)$.
+
+
+\question
+$f$ is differentiable at 0 if the limit exists: $\lim_{x \to 0} \frac{f(x) - f(0)}{x - 0} =	\lim_{x \to 0}	\frac{f(x)}{x}$. If $x \in \mathbb{Q}$ then $\frac{f(x)}{x} = 1+x$, and $\lim_{x \to 0} 1+x = 1$. If $x \in \mathbb{R} \setminus \mathbb{Q}$ then $\frac{f(x)}{x} = 1-x$, and $\lim_{x \to 0} 1-x = 1$. Thus $\lim_{x \to 0} \frac{f(x)}{x} = 1$ exists, so $f$ is differentiable at 0.
+
+
+\question
+$f$ is differentiable at $c$ if the limit exists:  $\lim_{x \to c} \frac{f(x) - f(c)}{x - c} = f'(c) = \lim_{x \to c} f'(x) = L$. The limit exists, so $f$ is differentiable at $c$ and $f'(c) = L$.
+
+
+\question
+$f$ is Riemann integrable if the limit of the lower and upper Riemann sums equal each other. Let $S_l$ denote the lower sum and $S_u$ denote the upper. Partitioning the interval into $n$ pieces gives us pieces of $2/n$ since the interval is on $[-1, 1]$.
+\begin{align*}
+	S_l	&=	\sum_{i=1}^n \underline{f(x_n)} \frac{2}{n}
+		=	\sum_{i=1}^{n/2} 0 \frac{2}{n} + \sum_{i=1}^{n/2} 1 \frac{2}{n}
+		=	\sum_{i=1}^{n/2} \frac{2}{n}
+		=	1	\\
+	S_u	&=	\sum_{i=1}^n \overline{f(x_n)} \frac{2}{n}
+		=	\sum_{i=1}^{n/2} 0 \frac{2}{n} + \sum_{i=1}^{n/2} 1 \frac{2}{n}
+		=	\sum_{i=1}^{n/2} \frac{2}{n}
+		=	1	\\
+	\lim_{n \to \infty} S_l &= 1 = \lim_{n \to \infty} S_u	\\
+\end{align*}
+So $f$ is Riemann integrable and $\int_{-1}^1 f = 1$.
+
+
+
+\end{document}

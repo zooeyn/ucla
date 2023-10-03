@@ -1,0 +1,65 @@
+\documentclass{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Astro 82}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{3}
+\usepackage{siunitx}
+\begin{document}
+\maketitle
+
+
+\question
+Mass of planet:
+\begin{align*}
+    \frac{v^3 P \sin^3{i}}{2\pi G}	&=	\frac{m^3}{(m+M)^2}	\\
+    m + M &\simeq M \\
+    m^3 &= \frac{v^3 P M^2 \sin^3{i}}{2\pi G}  \\
+    m^3 &= \frac{(\SI{5}{\metre\per\second})^3 (\SI{30}{day}) \sin^3{i} (2 \vdot R_\odot)^2}{2\pi G}  \\
+    m   &=  \boxed{\sin{i} \vdot \SI{2.3e26}{\kilogram}}
+\end{align*}
+Distance to star:
+\begin{align*}
+    v   &=	\frac{2\pi a m \sin{i}}{P(m+M)}	\\
+    a   &\simeq  \frac{vPM}{2\pi m \sin{i}}  \\
+    a   &=  \frac{(\SI{5}{\metre\per\second})(\SI{30}{day})(2 \vdot R_\odot)}{2\pi (\SI{2.3e26}{\kilogram}) \sin^2{i}}  \\
+    a   &=  \boxed{\frac{\SI{3.56e10}{\metre}}{\sin^2{i}}}
+\end{align*}
+
+
+\question
+If brightness decreases by 1\% for the planet fully in front of the star that means 1\% of the star's cross-section area is covered, which means the planet has a radius that is 10\% of the star's, or the radius $0.175 R_\odot$. Then average density is just mass over volume, which is $\rho = \frac{M}{V} = \frac{\sin{i} \vdot \SI{2.3e26}{\kilogram}}{\frac{4}{3}\pi(0.175 R_\odot)^3}$ = \fbox{$\sin{i} \SI{300}{\kilogram\per\metre\cubed}$}.
+
+The inclindation of the planet's orbit must be close to \SI{90}{\degree}, that is, the orbital plane must be close to line-of-sight. We can refine the inclination further by using the depths of the primary and secondary minima.
+
+
+\newpage
+\question
+Luminosity of the planet wrt luminosity of the Sun star at visible wavelength is practically zero.
+\begin{align*}
+    T_p    &=	T_\odot (1-a)^{1/4} \sqrt{R_\odot / 2D}	\\
+    T_p    &=	(\SI{5600}{\kelvin}) (0.7)^{1/4} \sqrt{\SI{6.96e8}{\metre} / \SI{4}{AU}}	\\
+    T_p &=  \SI{175}{\kelvin}  \\
+    \frac{B_p}{B_\odot} &=	\frac{e^{hc/(\lambda)k_b T_\odot}-1}{e^{hc/(\lambda)k_b T_p}-1}	\\
+    \frac{B_p}{B_\odot} &=	\frac{e^{hc/(\SI{550}{\nano\metre})k_b \SI{5600}{\kelvin}}-1}{e^{hc/(\SI{550}{\nano\metre})k_b \SI{175}{\kelvin}}-1}	\\
+    \frac{B_p}{B_\odot}    &=	\frac{106.42}{\SI{9.8e64}{}}	\\
+    \frac{B_p}{B_\odot} &=  \boxed{\SI{1.077e-63}{}}
+\end{align*}
+
+Luminosity of the planet wrt luminosity of the Sun star at wavelength \SI{1.2e-5}{\metre}.
+\begin{align*}
+    \frac{B_p}{B_\odot} &=	\frac{e^{hc/(\SI{1.2e-5}{\metre})k_b \SI{5600}{\kelvin}}-1}{e^{hc/(\SI{1.2e-5}{\metre})k_b \SI{175}{\kelvin}}-1}	\\
+    \frac{B_p}{B_\odot}    &=	\frac{0.24}{951}	\\
+    \frac{B_p}{B_\odot} &=  \boxed{\SI{2.5e-4}{}}
+\end{align*}
+
+Luminosity of the planet wrt luminosity of the Sun star at wavelength \SI{4e-6}{\metre}.
+\begin{align*}
+    \frac{B_p}{B_\odot} &=	\frac{e^{hc/(\SI{4e-6}{\metre})k_b \SI{5600}{\kelvin}}-1}{e^{hc/(\SI{1.4e-6}{\metre})k_b \SI{175}{\kelvin}}-1}	\\
+    \frac{B_p}{B_\odot}    &=	\frac{0.902}{\SI{8.6e8}{}}	\\
+    \frac{B_p}{B_\odot} &=  \boxed{\SI{1.04e-9}{}}
+\end{align*}
+
+The most appropriate choice would probably be from part b, since the ratio of the planet's brightness to the star's is highest, so it would be easier to see planets next to the star. Of course, the difficulty of observing at certain wavelengths would need to be considered since only some wavelengths are available to observe at the Earth's surface.
+
+\end{document}

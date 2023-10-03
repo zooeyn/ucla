@@ -1,0 +1,12 @@
+CS 161
+Zooey Nguyen
+105195172
+
+I can't figure out what's erroring. I tried my best. Sorry about my code :(
+I do know about the map coloring problem, though. My guess is that graph1 is not
+satisfiable with 3 colors but is with 4, and that would tell me that the minimum
+number of colors needed to color in graph1 is 4. This would also be the case for
+graph2 (or maybe graph2 requires fewer colors than 4), because it is known from
+the four color theorem that no more than 4 colors are needed to color a map and
+ensure that regions sharing a border do not share a color. In this case our
+borders are edges and regions are nodes in the graph.

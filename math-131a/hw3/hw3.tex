@@ -1,0 +1,115 @@
+\documentclass{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Math 131A}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{3}
+\begin{document}
+\maketitle
+
+
+\question
+\begin{alphaparts}
+\questionpart We wish to prove that $s_1 > s_3 > s_5 > \dots$. We have the following.
+\begin{align*}
+	s_3     &=  \frac{\alpha + s_2}{1 + s_2}
+			=	\frac{\alpha + \frac{\alpha + s_1}{1 + s_1}}{1 + \frac{\alpha + s_1}{1 + s_1}}
+			=   \frac{s_1 + \alpha s_1 + 2\alpha}{1 + \alpha + 2s_1}  
+			=   \frac{s_1(1 + \alpha + 2s_1) + 2\alpha - 2s_1^2}{1 + \alpha + 2s_1}
+			=   s_1 - 2 \frac{s_1^2 - \alpha}{1 + \alpha + 2s_1}    \\
+	s_1	    &>	\sqrt{\alpha}
+			\rightarrow s_1^2 > \alpha
+			\rightarrow s_1^2 - \alpha > 0 \\    
+	s_3 &\leq s_1 - 2 \frac{s_1^2 - \alpha}{1 + \alpha + 2s_1} < s_1 \\
+\end{align*}
+Next suppose $s_n > s_{n+2}$ holds for some odd $n \ge 1$. Then we have the following.
+\begin{align*}
+	s_{n+4}	&=	\frac{\alpha + s_{n+2}}{1 + s_{n+2}}
+			=	\frac{\alpha + \frac{\alpha + s_n}{1 + s_n}}{1 + \frac{\alpha + s_n}{1 + s_n}}
+			=   \frac{s_n + \alpha s_n + 2\alpha}{1 + \alpha + 2s_n}
+			=   \frac{s_n(1 + \alpha + 2s_n) + 2\alpha - 2s_n^2}{1 + \alpha + 2s_n}
+			=   s_n - \frac{s_n^2 - \alpha}{\frac{1}{2} + \frac{\alpha}{2} + s_n}    \\
+	\alpha  &> 1
+		\rightarrow  \frac{\alpha}{2} > \frac{1}{2}
+		\rightarrow \frac{1}{2} + \frac{\alpha}{2} + s_n > 1 + s_n \\
+	s_{n+2} &=  s_n - \frac{s_n^2 - \alpha}{1 + s_n}
+			> s_n - \frac{s_n^2 - \alpha}{\frac{1}{2} + \frac{\alpha}{2} + s_n}
+			= s_{n+4}
+\end{align*}
+Therefore by PMI we have that $s_n > s_{n+2}$ holds for all odd $n \ge 1$, or $s_1 > s_3 > s_5 > \dots$.
+
+\questionpart We wish to prove that $s_2 < s_4 < s_6 < \dots$. We have the following.
+\begin{align*}
+	s_2 &=  s_1 + \frac{\alpha - s_1^2}{1 + s_1}  <  s_1    \\
+	s_4	&=	\frac{\alpha + s_3}{1 + s_3}
+		=   \frac{s_2 + \alpha s_2 + 2\alpha}{1 + \alpha + 2s_2}
+		=   \frac{(1 + \alpha) \frac{\alpha + s_1}{1 + s_1} + 2\alpha}{1 + \alpha + \frac{\alpha + s_1}{1 + s_1}}  \\
+\end{align*}
+(sorry idk) Therefore $s_2 < s_4$. Suppose $s_n < s_{n+2}$ holds for some even $n \ge 2$. Then we have the following.
+\begin{align*}
+		&=		\\
+\end{align*}
+Therefore by PMI we have that $s_n < s_{n+2}$ holds for all even $n \ge 2$, or $s_2 < s_4 < s_6 < \dots$.
+
+\questionpart We wish to prove that $\lim s_n = \sqrt{\alpha}$. The limit is where the following equality holds:
+\begin{align*}
+	s_{n+1} &=  s_n \\
+	l       &=  \frac{\alpha + l}{1 + l}    \\
+	l + l^2 &=  \alpha + l  \\
+	l^2     &=  \alpha  \\
+	l   &=  \sqrt{\alpha}
+\end{align*}
+\end{alphaparts}
+
+
+\question
+First prove $l = \limsup s_n \Rightarrow (i), (ii)$.
+
+Then prove $(i), (ii) \Rightarrow l = \limsup s_n$.
+
+\question
+We wish to show that $\limsup (-s_n) = -\liminf s_n$. Let $\liminf s_n = m$, then for some $N$ we have that $n > N \Rightarrow s_n \ge m$. Equivalently this means that $n > N \Rightarrow -s_n \le -m$. Thus for the sequence $-s_n$, we have $\limsup (-s_n) = -m$. Therefore $\limsup (-s_n) = -\liminf s_n$.
+
+
+\question
+We have that for some $N$, $n > N \Rightarrow s_n \le t_n$. Let $\liminf s_n = a$, so for some $M$ we have $n > M \Rightarrow a \le s_n$. Let $\liminf t_n = b$, so for some $L$ you have $n > L \Rightarrow b \le t_n$. Then $n > \max(N, M, L) \Rightarrow a \le s_n, b \le t_n$. Because we have that $s_n \le t_n$ for every $n$ here, it is the case that $s_n \le b$ since $b$ is part of the elements of $t_n$ in this range. Then $a \le s_n \le b \le t_n$, or $a \le b$, or $\liminf s_n \le \liminf t_n$.
+
+We have that for some $N$, $n > N \Rightarrow s_n \le t_n$. Let $\limsup s_n = a$, so for some $M$ we have $n > M \Rightarrow s_n \le a$. Let $\limsup t_n = b$, so for some $L$ you have $n > L \Rightarrow t_n \le b$. Then $n > \max(N, M, L) \Rightarrow s_n \le a, t_n \le b$. Because we have that $s_n \le t_n$ for every $n$ here, it is the case that $a \le t_n$ since $a$ is part of the elements of $s_n$ in this range. Then $s_n \le a \le t_n \le b$, or $a \le b$, or $\limsup s_n \le \limsup t_n$.
+
+
+\question
+First prove that for a subsequence ($t_k$) of ($s_n$), $\lim t_k = +\infty \Rightarrow (s_n)$ not bounded above.
+
+Then prove $(s_n)$ not bounded above $\Rightarrow$ for a subsequence ($t_k$) of ($s_n$), $\lim t_k = +\infty$.
+
+
+\question
+\begin{alphaparts}
+	\questionpart $s_n = -n^2$. By Theorem 10.5, if the limit of $s_n$ exists in $\bar{\mathbb{R}}$ then $\limsup s_n = \liminf s_n = \lim s_n$, and $\lim -n^2 = -\infty$.
+	\questionpart $s_n = \begin{cases}
+		1 - \frac{1}{1+n^2} & \text{even } n \\
+		- 1 + \frac{1}{1+n^2} & \text{odd } n
+	\end{cases}$
+	\questionpart $s_n = \sin^2 n$.
+\end{alphaparts}
+
+\question
+\begin{alphaparts}
+	\questionpart $(s_n + t_n) = (2, 2, 3, 1, 2, 2, 3, 1, \dots)$, and the minimum as $n \to \infty$ is 1, so $\liminf(s_n + t_n = 1$. Thus $\liminf (s_n + t_n) = 1$. However, $\liminf s_n + \liminf t_n = 0 + 0 = 0$.
+	\questionpart From before we have the sequence of values in $(s_n + t_n)$ and note that the maximum as $n \to \infty$ is 3, so $\limsup (s_n + t_n) = 3$. However, $\limsup s_n + \limsup t_n = 2 + 2 = 4$.
+	\questionpart $(s_n t_n) = (0, 1, 2, 0, 0, 1, 2, 0, \dots)$, so the maximum as $n \to \infty$ is 2, so $\limsup s_n t_n = 2$. However, $(\limsup s_n)(\limsup t_n) = (2)(2) = 4$.
+\end{alphaparts}
+
+\question
+We wish to show that $(s_n)$ is a Cauchy sequence. A Cauchy sequence is a sequence for which $\forall \epsilon > 0, \exists N: m, n > N \Rightarrow |s_m - s_n| < \epsilon$. Suppose we have any $\epsilon > 0$ and let $m = n + k$. Then we have the following.
+\begin{align*}
+	|s_m - s_n|	&=	|s_{n+k} - s_n|	\\
+				&=	|(s_{n+k} - s_{n+k-1}) + (s_{n+k-1} - s_{n+k-2}) + \dots + (s_{n+1} - s_n)|	\\
+				&\le	|s_{n+k} - s_{n+k-1}| + \dots + |s_{n+1} - s_n|	\\
+				&\le	\sum_{i=n}^{n+k-1} (\frac{1}{2})^i
+				=	\sum_{i=1}^{k-1} ((\frac{1}{2})^n)^i
+				=	\frac{1 - ((\frac{1}{2})^n)^k}{1-(\frac{1}{2})^n}
+\end{align*}
+Thus you can take $N$ which satisfies $\epsilon = \frac{1 - (\frac{1}{2})^{k+N}}{1-(\frac{1}{2})^N}$. Therefore $(s_n)$ is Cauchy.
+
+\end{document}

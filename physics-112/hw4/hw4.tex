@@ -1,0 +1,69 @@
+\documentclass{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Physics 112}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{4}
+\usepackage{siunitx}
+\begin{document}
+\maketitle
+
+
+\question
+Blackbody radiation of Earth given Sun's blackbody.
+\begin{align*}
+    4\pi\sigma R_E^2 T_E^4	&=  \frac{L_\odot}{4\pi D^2} \pi R_E^2 \\
+    4\pi\sigma R_E^2 T_E^4	&=  \frac{4\pi\sigma R_\odot^2 T_\odot^4}{4\pi D^2} \pi R_E^2 \\
+    T_E^4	&=  \frac{R_\odot^2 T_\odot^4}{4 D^2} \\
+    T_E &=  \boxed{\SI{396}{\kelvin}}   \\
+\end{align*}
+
+
+\question
+Partition function of photon gas.
+\begin{align*}
+    Z	&=	\Pi_n \sum_i e^{-E_i/\tau}	\\
+    Z	&=	\Pi_n \sum_i e^{-i \hbar \omega / \tau}	\\
+    Z	&=	\Pi_n \frac{1}{1 - e^{\hbar\omega/\tau}}	\\
+    Z	&=	\boxed{\Pi_n [1 - e^{\hbar\omega/\tau]^{-1}}}	\\
+\end{align*}
+Helmholtz free energy of photon gas.
+\begin{align*}
+    F	&=  2 \int_0^\infty \frac{4\pi n^2 dn}{8} \tau \ln{(1 - e^{n\hbar\pi c /\tau L})}  \\
+    F	&=  \pi\tau \int_0^\infty n^2  \ln{(1 - e^{n\hbar\pi c /\tau L})} \dd{n}   \\
+    F    &=	\pi\tau \left[  n^3 \ln{(1 - e^{n\hbar\pi c /\tau L})}|_0^\infty -  \int_0^\infty \frac{n^3 e^{n\hbar\pi c /\tau L} (-\pi \hbar c)}{1 - e^{n\hbar\pi c /\tau L} (\tau L)}  \right]	\\
+    F    &=	\boxed{-\frac{\pi V \tau^4}{45 \hbar^3 c^3}} \\
+\end{align*}
+
+
+\question
+Heat shield absorbs and emits. Total thermal flux on each side is added to heat shield flux (halved due to two sides).
+\begin{align*}
+    \sigma T_u^4 + \sigma T_l^4	&=	\sigma T_m^4	\\
+    T_m &=  (T_u^4 + T_l^4)^{1/4}   \\
+    J_m &=  \sigma (T_u^4 + T_l^4) / 2  \\
+    J_{net,u}   &=  \sigma T_u^4 - \sigma (T_u^4 + T_l^4) / 2   \\
+    J_{net,u}   &=  \sigma (T_u^4 - T_l^4) / 2   \\
+    J_{net,u}   &=  \boxed{J_u / 2} \\
+    J_{net,l}   &=  -\sigma T_l^4 + \sigma (T_u^4 + T_l^4) / 2   \\
+    J_{net,l}   &=  \sigma (T_u^4 - T_l^4) / 2   \\
+    J_{net,l}   &=  \boxed{J_u / 2} \\
+\end{align*}
+
+
+\question
+Debye temperature.
+\begin{align*}
+    \theta	&=	\frac{hv}{k_b} \left[\frac{\pi^2 N}{V}\right]^{1/3}	\\
+    \theta	&=	\frac{(\SI{6.626e-34}{\joule\per\second})(\SI{2.383e4}{\centi\metre\per\second})}{\SI{1.38e-23}{\joule\per\kelvin}} \left[\pi^2 \frac{\SI{0.145}{\gram\per\centi\metre^3}}{\SI{4.002602}{\gram\per\mole}} (\SI{6.022e23}{\per\mole}) \right]^{1/3}	\\
+    \theta  &=  \SI{68.5}{\kelvin}
+\end{align*}
+Heat capacity per gram given Debye temperature. Take it in the limit $T \ll \theta$. Ends up being smaller somehow. Maybe I messed up. I don't know.
+\begin{align*}
+    \frac{C_V}{\rho V} &=  \frac{\frac{12 k_b N \pi^4 T^3} {5\theta^3}}{\rho V} \\
+    \frac{C_V}{\rho V} &=  \frac{12T^3}{5(\SI{68.5}{\kelvin})^3} \frac{k_b \pi^4}{\rho} \frac{N}{V} \\
+    \frac{C_V}{\rho V} &=  k_b \pi^4 \frac{12T^3}{5(\SI{68.5}{\kelvin})^3} \frac{1}{\SI{0.145}{\gram\per\centi\metre^3}} \frac{\SI{0.145}{\gram\per\centi\metre^3} (\SI{6.022e23}{\per\mole})}{\SI{4.002602}{\gram\per\mole}} \\
+    \frac{C_V}{\rho V} &=   \boxed{.001 \times T^3}
+\end{align*}
+
+\end{document}

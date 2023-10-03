@@ -1,0 +1,70 @@
+---
+title: "Homework 8"
+author: "Zooey Nguyen"
+date: "11/25/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+
+```{r}
+births <- read.csv("births.csv")
+births
+```
+
+```{r}
+length(births$Habit)
+```
+
+There are 1998 observations in the Habit category.
+
+```{r}
+levels(births$Habit)
+```
+
+The category for missing observations is named the empty string, "".
+
+```{r}
+barplot(table(births$Habit), col="red")
+```
+
+```{r}
+known_habit <- droplevels(births[which(births$Habit != ""),])
+levels(known_habit$Habit)
+```
+
+```{r}
+boxplot(weight ~ Habit, data=known_habit)
+```
+
+## Question 2
+```{r}
+non_weights <- known_habit$weight[which(known_habit$Habit == "NonSmoker")]
+smoke_weights <- known_habit$weight[which(known_habit$Habit == "Smoker")]
+
+hist(non_weights,
+     prob = TRUE,
+     main = "Histogram of Baby Weight by Mother's Smoking Habit",
+     xlab = "Weight (oz)",
+     col = "green",
+     density = 20,
+     xlim = range(c(non_weights, smoke_weights)),
+     ylim = c(0, .03))
+hist(smoke_weights,
+     prob = TRUE,
+     col = "red",
+     density = 20,
+     add = TRUE)
+abline(v = median(non_weights), col = "green", lwd = 2)
+abline(v = median(smoke_weights), col = "red", lwd = 2)
+legend("topleft", )
+
+
+
+```
+
+

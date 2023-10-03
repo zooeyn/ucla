@@ -1,0 +1,77 @@
+---
+title: "Stats 102A - Homework 3"
+author: "Zooey Nguyen"
+date: "2/22/2021"
+output: pdf_document
+---
+
+```{r setup}
+source("105195172_stats102a_hw3.R")
+load("wordlists.RData")
+list2env(wordlists, envir=environment())
+```
+
+### Warmup
+Looks like all the words in x have "foo" somewhere in it but it could be anywhere from beginning to end.
+```{r}
+print(regex_golf(Warmup$x, Warmup$y, pat_1))
+```
+\newpage
+### Anchors
+All the words in x have "ick" at the *end* of the word while none of them in y do. Some words in y have "ick" but not at the end.
+```{r}
+print(regex_golf(Anchors$x, Anchors$y, pat_2))
+```
+\newpage
+### Ranges
+Looks like these all only have letters from a to f.
+```{r}
+print(regex_golf(Ranges$x, Ranges$y, pat_3))
+```
+\newpage
+### Backrefs
+This one looks tricky. In the x all the words have some repetition of a substring with at least three letters. My capture group has to be greedy and enough to capture the second largest identical group.
+```{r}
+print(regex_golf(Backrefs$x, Backrefs$y, pat_4))
+```
+\newpage
+### Abba
+It looks like we need to ensure we DON'T match any words with the pattern abba in it, where a is one letter and b is another. Hmm.
+```{r}
+print(regex_golf(Abba$x, Abba$y, pat_5))
+```
+
+\newpage
+### A man, a plan
+Everything to match has to be a palindrome. So I think as a simpler check I can check just that we can match ab ba pattern at beginning/end of the word.
+```{r}
+print(regex_golf(`A man, a plan`$x, `A man, a plan`$y, pat_6))
+```
+\newpage
+### Prime
+So there has to be a prime number of x's. Need to negative-match if anything is an exact multiple of two or more x's. So first check with negative lookahead that a group of two through however many x's does NOT perfectly fit into the string more than once. If we get that yes, it never worked for any length between two and however many, then we match the whole string.
+```{r}
+print(regex_golf(Prime$x, Prime$y, pat_7))
+```
+oh my god it worked.
+
+\newpage
+### Four
+Some letter is repeated four times with one character between each time.
+```{r}
+print(regex_golf(Four$x, Four$y, pat_8))
+```
+
+\newpage
+### Order
+All the letters are in descending alphabetical order. I really do not know how to do this in a pretty way so I'm brute forcing it with the letters... please don't judge me I am very tired.
+```{r}
+print(regex_golf(Order$x, Order$y, pat_9))
+```
+
+\newpage
+### Alphabetical
+Having a really difficult time figuring this one out and I thought it would be the easiest out of the last three, lol. Was not able to get a real solution in time but I kept my last test idea in just as a note that this is the one I attempted, but I matched everything instead of just matching the x-list.
+```{r}
+print(regex_golf(Alphabetical$x, Alphabetical$y, pat_12))
+```

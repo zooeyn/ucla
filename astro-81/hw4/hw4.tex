@@ -1,0 +1,177 @@
+\documentclass[newpage]{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Astro 81}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{4}
+\usepackage{siunitx}
+\begin{document}
+\maketitle
+
+
+\question
+\begin{alphaparts}
+	\questionpart Luminosity is given by the equation:
+	\begin{align*}
+		L	&=	4\pi R^2 \sigma T^4	\\
+		L	&=	4\pi (20*\SI{6.96e8}{\metre})^2 (\SI{5.67e-8}{\watt\per\metre^2\per\kelvin^4}) (\SI{1e4}{\kelvin})^4	\\
+		L	&=	\boxed{\SI{1.38e30}{\watt}}	\\
+	\end{align*}
+	\questionpart Absolute magnitude is found from luminosity:
+	\begin{align*}
+		M	&=	-2.5 \log (L/L_\odot)	\\
+		M	&=	-2.5 \log (\SI{1.38e30}{\watt}/\SI{3.82e26}{\watt})	\\
+		M	&=	\boxed{-8.9}	\\
+	\end{align*}
+	\questionpart Apparent magnitude can be found with the distance modulus:
+	\begin{align*}
+		m	&=	M + 5 \log(R) - 5	\\
+		m	&=	-8.9 - 5 + 5 \log(50)	\\
+		m	&=	\boxed{-5.4}	\\
+	\end{align*}
+	\questionpart Flux density at the star's surface is:
+	\begin{align*}
+		F_s	&=	L/(4\pi r^2)	\\
+		F_s	&=	\SI{1.38e30}{\watt} / (\SI{4\pi}{\steradian} (20*\SI{6.96e8}{\metre})^2)	\\
+		F_s	&=	\boxed{\SI{5.66e8}{\watt\per\steradian\per\metre^2}}	\\
+	\end{align*}
+\end{alphaparts}
+
+
+\question
+\begin{alphaparts}
+	\questionpart Luminosity of a white dwarf with radius of Earth:
+	\begin{align*}
+		L	&=	4\pi R^2 \sigma T^4	\\
+		L	&=	4\pi (\SI{6.37e6}{\metre})^2 (\SI{5.67e-8}{\watt\per\metre^2\per\kelvin^4}) (\SI{2e4}{\kelvin})^4	\\
+		L	&=	\boxed{\SI{4.62e24}{\watt}}	\\
+	\end{align*}
+	\questionpart Wavelength at peak specific flux found by Wien's displacement law:
+	\begin{align*}
+		\lambda_{max} T	&=	\SI{2.9e-3}{\metre\kelvin}	\\
+		\lambda_{max}	&=	\SI{2.9e-3}{\metre\kelvin}	/	\SI{2e4}{\kelvin}	\\
+		\lambda_{max}	&=	\boxed{\SI{1.45e-7}{\metre}}	\\
+	\end{align*}
+	\questionpart Absolute magnitude is found from luminosity:
+	\begin{align*}
+		M	&=	-2.5 \log (\SI{4.62e24}{\watt}/\SI{3.82e26}{\watt})	\\
+		M	&=	\boxed{4.8}	\\
+	\end{align*}
+\end{alphaparts}
+
+
+\question
+Note that a parsec is \SI{3.086e16}{\metre}.
+\begin{align*}
+	A_v	&=	1.086\tau_v	\\
+	A_v	&=	1.086(n \sigma r)	\\
+	30	&=	1.086(n (\SI{1e-6}{\metre}^2) (\SI{2.46e20}{\metre})	\\
+	n	&=	\boxed{\SI{1.12e-7}{\metre^-3}}	\\
+\end{align*}
+
+
+\question
+\begin{alphaparts}
+	\questionpart First calculate magnitude differences for each of the bands.
+	\begin{align*}
+		m_{B,Vega} - m_{B,Annie}	&=	-2.5 \log{F_{B,Vega} / F_{B, Annie}}	\\
+		m_{B,Vega} - m_{B,Annie}	&=	-2.5 \log{1000000}	\\
+		m_{B,Vega} - m_{B,Annie}	&=	-15	\\
+		m_{V,Vega} - m_{V,Annie}	&=	-2.5 \log{F_{V,Vega} / F_{A, Annie}}	\\
+		m_{V,Vega} - m_{V,Annie}	&=	-2.5 \log{100000}	\\
+		m_{V,Vega} - m_{V,Annie}	&=	-12.5	\\
+	\end{align*}
+	Note that $m_{Vega}$ for both is defined to be 0, so we get
+	\begin{align*}
+		m_{B,Annie}	&=	\boxed{15}	\\
+		m_{V,Annie}	&=	\boxed{12.5}	\\
+	\end{align*}
+	\questionpart We can find the color excess and from there the extinction in the $V$ band.
+	\begin{align*}
+		E_{B-V} &=  (m_{B,Annie} - m_{V,Annie}) - (M_{B,Annie} - M{V,Annie})	\\
+		E_{B-V} &=  (15 - 12.5)	\\
+		\frac{1}{3} A_V &=  2.5 \\
+		A_V &=  \boxed{7.5}    \\
+	\end{align*}
+	\questionpart Use the distance modulus for the $V$ band.
+	\begin{align*}
+		m_{V,Annie} - M_{V,Annie}	&=	5 \log {r/\SI{10}{pc}} + A_V	\\
+		12.5    &=  5 \log {r/\SI{10}{pc}} + 7.5    \\
+		\log {r/\SI{10}{pc}}    &=  1   \\
+		r/\SI{10}{pc}	&=	10	\\
+		r   &=  \boxed{\SI{100}{pc}}    \\
+	\end{align*}
+\end{alphaparts}
+
+
+\question
+\begin{alphaparts}
+	\questionpart If liquid water can exist on the surface it means that the planet's temperature is somewhere that liquid water can exist, that is, between \SI{0}{\celsius} and \SI{100}{\celsius}, note Kelvin is Celsius + 273. Given the albedo $A = 0.4$ and a temperature estimate of \SI{50}{\celsius} we can get this.
+	\begin{align*}
+		T_p	&=	T_Z (1-A)^{1/4} (R_Z / 2d)^{1/2}	\\
+		\SI{323}{\kelvin}    &= \SI{3480}{\kelvin} (0.6)^{1/4} (\sqrt{\frac{.013 R_\odot^2 T_\odot^4}{T_Z^4}} / 2d)^{1/2}	\\
+		d	&=	\SI{9.8e9}{\metre}	\\
+		d	&=	\boxed{\SI{.066}{AU}}	\\
+	\end{align*}
+	\questionpart Minimum mass can be found from escape velocity limit.
+	\begin{align*}
+		6\sqrt{3kT_p/m_{min}}	&=	\sqrt{2GM_p/r_p}	\\
+		6\sqrt{3(\SI{1.38e-23}{\joule\per\kelvin})(\SI{3480}{\kelvin})/m_{min}}	&=	\sqrt{2(\SI{6.674e-11}{\newton\metre^2\per\kilogram^2})*3(\SI{5.972e24}{\kilogram})/\SI{6.371e6}{\metre}}	\\
+		m_{min}	&=	\SI{1.38e-26}{\kilogram}	\\
+		m_{min}	&=	\boxed{\SI{8.32}{\atomicmassunit}}	\\
+	\end{align*}
+	This tracks with part b as this is higher than the atomic mass of helium which escapes Earth but lower than that of oxygen which stays on Earth, so we find that the behavior on this planet is in the ballpark of the Earth's atmosphere.
+\end{alphaparts}
+
+
+\question
+Given a Google search that the boiling point of sodium is a little over 1000K, it would be a cool gas relative to the Sun. The reason for the deepened lines is that the sodium gas is particularly "sensitive" to the emitted photons at the sodium line from the Sun, because those photons must have exactly some transition energy of sodium in order to have been emitted. So the gas, which is cooler than the Sun, has sodium atoms with electrons with lower energy levels on average. Say a photon from the Sun originated from an n=3 to n=2 transition. It is more likely than on the Sun's surface that the sodium gas has a lower level electron, like n=2. So if that photon hits an n=2 electron in the gas, that electron absorbs it and jumps to n=3. So the transition is "reversed" if you will, because electrons in the sodium gas on the lower energy level catch the photons that were thrown out by electrons in the Sun. Absorption lines deepen because the electrons on lower energy levels are abundant and can catch more of those photons than a hotter gas could, which doesn't have as many electrons ready for the particular transition energy of the incoming photons.
+
+
+\question
+Electron transitions from n=3 directly to n=1:
+\begin{align*}
+	E_{3,1}	&=	\SI{13.6}{\electronvolt} \left(\frac{1}{1^2} - \frac{1}{3^2}\right)	\\
+	E_{3,1}	&=	\boxed{\SI{12.08}{\electronvolt}}	\\
+	E_{3,1}	&=	hc/\lambda_{3,1}	\\
+	\lambda_{3,1}	&=	\boxed{\SI{1.02e-7}{\metre}}	\\
+\end{align*}
+Electron transitions from n=3 to n=2, then n=2 to n=1:
+\begin{align*}
+	E_{3,2}	&=	\SI{13.6}{\electronvolt} \left(\frac{1}{1^2} - \frac{1}{2^2}\right)	\\
+	E_{3,2}	&=	\boxed{\SI{1.88}{\electronvolt}}	\\
+	E_{3,2}	&=	hc/\lambda_{3,2}	\\
+	\lambda_{3,2}	&=	\boxed{\SI{6.59e-7}{\metre}}	\\
+	E_{2,1}	&=	\SI{13.6}{\electronvolt} \left(\frac{1}{2^2} - \frac{1}{3^2}\right)	\\
+	E_{2,1}	&=	\boxed{\SI{10.2}{\electronvolt}}	\\
+	E_{2,1}	&=	hc/\lambda_{2,1}	\\
+	\lambda_{2,1}	&=	\boxed{\SI{1.2e-7}{\metre}}	\\
+\end{align*}
+
+
+\question
+\begin{alphaparts}
+	\questionpart The Balmer alpha H line starts at \fbox{n=2} and ends at \fbox{n=3}.
+	\questionpart The wavelength can be found with the transition energy equation:
+	\begin{align*}
+		hc/\lambda	&=	\SI{13.6}{\electronvolt} \left(\frac{1}{2^2} - \frac{1}{3^2}\right)	\\
+		\lambda	&=	\frac{hc}{\SI{13.6}{\electronvolt} (0.1388)}	\\
+		\lambda	&=	\boxed{\SI{6.56e-7}{\metre}}	\\
+		\end{align*}
+	\questionpart The ionisation energy is negative the energy at the n=4 state:
+	\begin{align*}
+		E	&=	\frac{\SI{13.6}{\electronvolt}}{4^2}	\\
+		E	&=	\boxed{\SI{0.85}{\electronvolt}}	\\
+	\end{align*}
+	\questionpart The velocity of the ejected electron comes from the excess energy provided by the photon.
+	\begin{align*}
+		E_{excess}	&=	E_{photon} - E_3	\\
+		\frac{1}{2} m_e v^2	&=	\frac{hc}{\SI{3e-7}{\metre}} - \frac{\SI{13.6}{\electronvolt}}{3^2}	\\
+		v	&=	\sqrt{\frac{2 \vdot \SI{2.62}{\electronvolt} \vdot \SI{1.602e-19}{\joule\per\electronvolt}}{\SI{9.1e-31}{\kilogram}}}	\\
+		v	&=	\boxed{\SI{9.6e5}{\metre\per\second}}	\\
+	\end{align*}
+\end{alphaparts}
+
+
+
+\end{document}

@@ -1,0 +1,169 @@
+---
+title: "Homework 5"
+author: "Zooey Nguyen"
+date: "11/4/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1
+```{r}
+char <- c("2", "1", "0")
+num <- 0:2
+charnum <- data.frame(char, num)
+
+# Part a
+as.numeric(char)
+as.numeric(charnum$char)
+# The outputs for charnum returns an error because a dataframe stores the character values in the first column as a factor, not a character vector, so it returns the number of the level that corresponds to each row, where the levels are organised in ascending order "0", "1", and "2".
+
+# Part b
+as.numeric(as.character(charnum$char)) # preserves the order
+```
+
+## Question 2
+
+```{r}
+library(MASS)
+data(Cars93)
+
+# Part a
+dim(Cars93)[1] # There are 93 cars in the dataset.
+dim(Cars93)[2] # There are 27 variables in the dataset.
+
+# Part b
+Cars93$Man # returns NULL because there is another variable in the dataset that starts with Man, so it's not a unique identifier for the variable Manufacturer.
+Cars93$Manu # will work to uniquely identify Manufacturer
+
+# Part c
+f <- table(Cars93$Cylinders)
+rel_f <- f / sum(f)
+# The most common number of cylinders is 4, and 52.6% of cars in the dataset have 4 cylinders.
+
+# Part d
+mean(Cars93[Cars93$Cylinders == 4,]$MPG.highway) # The average highway mileage among cars with 4 cylinders is 31.4 miles per gallon.
+mean(Cars93[Cars93$Cylinders == 6,]$MPG.highway) # The average highway mileage among cars with 6 cylinders is 25.3 miles per gallon, which is lower than that of cars with 4 cylinders.
+```
+
+## Question 3
+```{r}
+parks_df <- data.frame("Name" = c("Leslie", "Ron", "April"), "Height" = c(62, 71, 66), "Weight" = c(115, 201, 119), "Income" = c(4000, NA, 2000))
+
+# Part a
+data(trees)
+attach(trees)
+attach(parks_df) # note the output saying "The following object is masked from trees: Height
+
+# If we try to find the mean height of the trees data using just mean(Height), this will not work since the most recent attachment to the search path of R. Because parks_df was added most recently, its variables will take precedence over that of trees, and it also has a variable named Height, so R will use that Height instead of the Height from trees.
+search() # Notice that parks_df is listed as position 2, whereas trees is position 3, so R will look at parks_df first.
+mean(Height) # Takes the mean Height of parks_df, not trees Height.
+mean(trees$Height) # Correct answer. Tell R to look in specifically trees for variable Height
+```
+
+## Question 4
+```{r}
+library(UsingR)
+
+# Part a
+data(npdb)
+sort(table(npdb$state)) # ascending order. California, listed last with the most occurrences, had the most awards.
+
+# Part b
+table(table(npdb$ID)) # This table has number of malpractice awards vs. overall frequency against each other. This is useful because it will provide the frequency distribution across the individual frequencies per doctor in the first table, so we can see how many doctors got one award, two awards, etc. Instead of searching through the entire dataset to see any outliers, we can easily see now that most doctors get only 1 award, and a few special cases get over 5, up to 73.
+
+# Part c
+amt <- as.numeric(npdb$amount)
+mean <- mean(amt)
+med <- median(amt)
+p_mean <- length(amt[amt < mean]) / length(amt)
+p_mean # The mean is at the 74th percentile, the median is defined to be the 50th percentile. this will be the case if the distribution is right-skewed, that is, the bulk of awards are relatively low, while a few are very high. When a distribution is right-skewed the mean is pulled more away from the median, since being reliant on the dramatically increased overall sum it is sensitive to outliers, but the median will not change much since it relies on the total number of observations, which is only increased by the number of outliers.
+```
+
+## Question 5
+```{r}
+# Part a
+cv <- function(x) {
+  sd(x, na.rm=T)/mean(x, na.rm=T)
+}
+
+# Part b
+data(pi2000)
+cv(pi2000) # 0.63
+
+# Part c
+cv(Cars93$Price) # 0.49
+
+# Part d
+sd(pi2000)
+sd(Cars93$Price)
+
+# Price has a higher standard deviation, but pi2000 has a higher coefficient of variation. This is because in Price, the standard deviation is higher only in absolute terms, but relative to the usual size of the numbers in the dataset, it's small, whereas in pi2000, the standard deviation is around 3, but digits only range on 0-9, so it's relatively large compared to the numbers in the pi2000 dataset.
+```
+
+## Question 6
+```{r}
+L <- list("Vector" = 1:10, "Matrix" = matrix(1:6, nrow = 2, ncol = 3))
+
+# Part a
+# First: you can't have a component just named after NULL, if NULL doesn't exist you can't have a nonexistent name for a component. Maybe an empty one, but the component must have some place for a name.
+# Second: assigning NULL on its own will simply make the new component not exist, and therefore not be assigned to L in the first place. You have to wrap NULL in an object that will preserve it as an object, which only list() will do.
+
+# Part b
+L <- c(L[1], "List" = list(NULL), L[2])
+L
+```
+
+## Question 7
+```{r}
+stats <- function(x) {
+  n_observations <- nrow(x)
+  n_variables <- ncol(x)
+  variable_names <- colnames(x)
+  column_data <- list()
+  for (i in 1:n_variables) {
+    col <- x[,i]
+    class <- class(col)
+    if (class == "numeric" | class == "integer") {
+      min <- min(col, na.rm=TRUE)
+      mean <- mean(col, na.rm=TRUE)
+      max <- max(col, na.rm=TRUE)
+      na <- sum(is.na(col))
+      col_stats <- list(class, min, mean, max, na)
+      names(col_stats) <- c("class", "minimum", "mean", "maximum", "nas")
+    } else {
+      f <- table(col)
+      modes <- names(f)[f == max(f, na.rm = TRUE)]
+      n_obs <- max(f, na.rm = TRUE)
+      col_stats <- list(class, modes, n_obs)
+      names(col_stats) <- c("class", "modes", "n_obs")
+    }
+    this_column <- list(col_stats)
+    names(this_column) <- variable_names[i]
+    column_data <- c(column_data, this_column)
+  }
+  output <- list(n_observations, n_variables, variable_names, column_data)
+  names(output) <- c("n_observations", "n_variables", "variable_names", "column_data")
+  # print(str(output)) # for checking my output
+  output
+}
+
+# Part b
+cars <- stats(Cars93)
+
+# Part c
+cars$column_data[[15]]$maximum
+
+# Part d
+vec <- factor()
+for (i in 1:length(cars$column_data)) {
+  vec <- c(vec,cars$column_data[[i]]$class[1])
+}
+t <- table(vec)
+common <- names(t[t == max(t)])
+cars$n_variables <- NULL
+cars$common_class <- common
+str(cars)
+```

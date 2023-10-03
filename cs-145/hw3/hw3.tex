@@ -1,0 +1,83 @@
+\documentclass{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{CS 145}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{3}
+\begin{document}
+\maketitle
+
+
+\question
+The support vectors are the ones with ID 1, 5, and 17. They are the only ones with nonzero Langrangian multipliers, and only active points or support vectors will have nonzero multipliers, all others are zero.
+
+Normal vector and bias.
+\begin{align*}
+    w	&=	\sum_s  \lambda_s y_s x_s	\\
+        &=  (0.5084)(1)(0.91, 0.32) + (0.4625)(1)(0.41, 2.04) + (0.9709)(-1)(2.05, 1.54)    \\
+        &=  (-1.338, -0.3889)   \\
+    b   &=  \sum_s \lambda_s y_s    \\
+        &=  0.5084 + 0.4625 - 0.9709    \\
+        &=  0   \\
+\end{align*}
+
+The label of $x_{new}$ is the following.
+\begin{align*}
+    y	&=	sign(w \vdot x_{new} + b)	\\
+        &=  sign((-1.338, -0.3889) \vdot (2, -0.5)) \\
+        &=  -1
+\end{align*}
+
+
+\question
+
+String representations for each tree.
+\begin{itemize}
+    \item T1: 5 1 5 -1 -1 6 2 -1 3
+    \item T2: 5 1 -1 6
+    \item T3: 5 1 -1 3
+    \item T4: 5 1 -1 6 -1 3
+\end{itemize}
+
+T2 and T3 are embedded subtrees of T1, but T4 is not.
+
+Only T2 is an embedded subtree of T1.
+
+
+\question
+Frequent subtrees.
+\begin{itemize}
+    \item 1-subtrees: A, B, C, D
+    \item 2-subtrees: AA, AB, AC, AD, BA, BB, BC, BD, CA, CB
+    \item 3-subtrees: ACB, BBC, BCA
+\end{itemize}
+
+
+\question
+Minimum DFS codes for each graph. G3 < G2 < G1
+\begin{itemize}
+    \item G1: axc, cxf, cyb, cyd, cxa, dxe, cye
+    \item G2: axb, byc, cxa, cyd, dxa, dxg, cye
+    \item G3: axb, byc, cxa, axd, dxe, eyc, eyg, gxf
+\end{itemize}
+
+gSpan frequent subgraphs without single-node graphs. There are 20 frequent subgraphs in total.
+\begin{itemize}
+    \item Two-node: ab x, ac x, ad x, bc y, cf x, cd y, ce y, de x
+    \item Three-node: abc xxy, adc xxy, ade xx, ace xy, bcd yy, bce yy, cde yyx
+    \item Four-node: abcd, abce, acde, bcde
+    \item Five-node: abcde
+\end{itemize}
+
+Canonical adjacency matrix.
+\[\begin{pmatrix}
+    f & 0 & 0 & 0 & 0 & 0   \\
+    0 & e & 0 & 0 & 0 & 0   \\
+    0 & x & d & 0 & 0 & 0   \\
+    x & y & y & c & 0 & 0   \\
+    0 & 0 & 0 & y & b & 0   \\
+    0 & 0 & x & x & 0 & a   \\
+\end{pmatrix}
+\]
+
+\end{document}

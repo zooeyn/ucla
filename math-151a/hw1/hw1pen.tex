@@ -1,0 +1,102 @@
+\documentclass{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Math 151A}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{1}
+\begin{document}
+\maketitle
+
+\question
+Absolute and relative error.
+\begin{align*}
+    e_{abs}	&=	 |14 - 3.7|	= \boxed{10.30000} \\
+    e_{rel}	&=	 |14 - 3.7|/|14|	= \boxed{0.73571} \\
+\end{align*}
+
+\question
+Taylor polynomial.
+\begin{align*}
+    P_3(x \approx 0)	&=	f(0) + f'(0)x + \frac{f''(0)}{2}x^2 + \frac{f^{(3)}}{6}x^3	\\
+    	&=	\sqrt{1+x}|_0 + \frac{1}{2\sqrt{1+x}}|_0 x - \frac{1}{8(1+x)^{3/2}}|_0 x^2 + \frac{1}{16(1+x)^{5/2}}|_0x^3	\\
+    	&=	\boxed{1 + \frac{x}{2} - \frac{x^2}{8} + \frac{x^3}{16}}	\\
+\end{align*}
+Taylor approximations.
+\begin{align*}
+    \sqrt{0.5}	\approx	P_3(-0.5) &= 0.71093     &\quad e_{abs}(\sqrt{0.5}) =  0.00382 \\
+    \sqrt{0.75}	\approx	P_3(-0.25) &= 0.86621    &\quad e_{abs}(\sqrt{0.75}) =  0.00018 \\
+    \sqrt{1.25}	\approx	P_3(0.25) &= 1.11816     &\quad e_{abs}(\sqrt{1.25}) =  0.00012 \\
+    \sqrt{1.5}	\approx	P_3(0.5) &= 1.22656      &\quad e_{abs}(\sqrt{1.5}) =  0.00181 \\
+\end{align*}
+
+\question
+We wish to prove that $\exists c \in (0.2, 0.3)$ s.t. $x\cos{x} - 2x^2 + 3x - 1 = 0$ for $x = c$. Let the left-hand side be denoted $f(x)$. First note that $x \cos x$ is continuous on $[0.2, 0.3]$, as are the polynomial terms, so $f(x)$ is continuous. Next, we have that $f(0.2) = -0.28398 < 0$, and $f(0.3) = 0.00660 > 0$. By IVT, we have that $\exists c \in (0.2, 0.3)$ s.t. $f(c) = 0$, so we have a solution to the equation given. Note that the interval $(0.2, 0.3) \subset [0.2, 0.3]$, therefore $x \in (0.2, 0.3) \Rightarrow x \in [0.2, 0.3]$, so the solution $c$ exists on the interval $[0.2, 0.3]$.
+
+\question
+Note this requires 15 FLOPs. The common factor is $e^x$ so we can nest it this way, requiring only 9 FLOPs.
+\begin{align*}
+    f(x)	&=	(((((1.01 e^x - 4.62)e^x) - 3.11)e^x) + 12.2)e^x - 1.99	\\
+\end{align*}
+Estimating $f(1.53)$ using the naive form.
+\begin{align*}
+    f(1.53)	&=	1.01(4.62)(4.62)(4.62)(4.62) - 4.62(4.62)(4.62)(4.62) - 3.11(4.62)(4.62) + 12.2(4.62) - 1.99    \\
+    &=	1.01(21.344)(4.62)(4.62) - 4.62(21.344)(4.62) - 3.11(21.344) + 56.364 - 1.99    \\
+    &=	1.01(98.609)(4.62) - 4.62(98.609) - 66.380 + 56.364 - 1.99    \\
+    &=	1.01(455.574) - 455.574 - 66.380 + 56.364 - 1.99    \\
+    &=	460.130 - 455.574 - 66.380 + 56.364 - 1.99    \\
+    &=	-7.45    \\
+\end{align*}
+Estimating $f(1.53)$ using the nested form.
+\begin{align*}
+    f(1.53)	&=	(((((1.01(4.62) - 4.62)(4.62)) - 3.11)(4.62)) + 12.2)(4.62) - 1.99	\\
+    &=	(((((4.666 - 4.62)(4.62)) - 3.11)(4.62)) + 12.2)(4.62) - 1.99	\\
+    &=	(((((0.046)(4.62)) - 3.11)(4.62)) + 12.2)(4.62) - 1.99	\\
+    &=	((((0.212) - 3.11)(4.62)) + 12.2)(4.62) - 1.99	\\
+    &=	((-13.389) + 12.2)(4.62) - 1.99	\\
+    &=	(-1.189)(4.62) - 1.99	\\
+    &=	-5.493    - 1.99	\\
+    &=	-7.483	\\
+\end{align*}
+Comparing the errors. The error of the nested result is lower..
+\begin{align*}
+    e_{rel,naive}	&=	|-7.483+7.61|/7.61  = 0.021\\
+    e_{rel,nested}	&=	|-7.45+7.61|/7.61	= 0.017\\
+\end{align*}
+
+
+\question
+Linear convergence.
+\begin{align*}
+    \lim \frac{|p_{n+1} - p|}{|p_n - p|}	&=	\lim \frac{|p_{n+1}|}{|p_n|}	\\
+    &=	\lim \frac{|p_{n+1}|}{|p_n|}	\\
+    &=	\lim \frac{(1/10)^{n+1}}{(1/10)^{n}}	\\
+    &=	\lim \frac{1}{10}	\\
+\end{align*}
+Quadratic convergence.
+\begin{align*}
+    \lim \frac{|p_{n+1} - p|}{|p_n - p|^2}	&=	\lim \frac{|p_{n+1}|}{|p_n|^2}	\\
+    &=	\lim \frac{10^{-2^{n+1}}}{(10^{-2^n})^2}	\\
+    &=	\lim \frac{10^{-2^{n+1}}}{10^{-2^n*2}}	\\
+    &=	\lim \frac{10^{-2^{n+1}}}{10^{-2^{n+1}}}	\\
+    &=	1	\\
+\end{align*}
+
+
+\question
+We wish to prove that a function being L-Lipschitz on $[a,b]$ implies continuity. Choose any $\epsilon > 0$. We have by the Lipschitz condition that $\forall x_0 \in [a,b]$, we can get $|f(x)-f(x_0)| \le L|x-x_0|$. We can choose $\delta = \epsilon/L$. Then we get that if $|x-x_0| < \delta = \epsilon/L$, this implies that $|f(x)-f(x_0)| \le L|\epsilon/L| = \epsilon$. Therefore we have that $f(x) \in C([a,b])$.
+
+We wish to prove that if the derivative of $f$ is bounded on $[a,b]$ by L, then $f$ is L-Lipschitz. By MVT, $\exists c \in (a,b)$ s.t. $\forall x,y \in [a,b], f'(c) = \frac{f(x) - f(y)}{x-y}$. Since $|f'(c)| < L$, we have that $\frac{|f(x) - f(y)|}{|x-y|} < L$, so $|f(x) - f(y)| \le L|x-y|$, meaning that $f$ is L-Lipschitz on $[a,b]$.
+
+Consider the function $f(x) = \sqrt(x)$ on $[0,a]$ for some real number $a$. It is not Lipschitz because nearing 0, the change in $f(x)$ becomes very great compared to the change in $x$. Say we choose the range $[0,x]$. Then the Lipschitz inequality becomes $\sqrt{x} \le Lx$, or $\frac{1}{\sqrt{x}} \le L$. There is no constant $L$ that satisfies this for all $x$, since as $x \to 0$, $\frac{1}{\sqrt{x}}$ goes to infinity.
+
+
+\question
+\begin{alphaparts}
+    \questionpart False. It cannot be the case that $3x^2 \le cx^4$ for any value of c because this inequality is equivalent to $\frac{3}{x^2} \le c$, and the left hand side is not bounded above as $x \to 0$.
+    \questionpart True. We can choose $c=5$ so that we get $x^10 + 4x^3 \le 5x^3$, or equivalently $x^10 \le x^3$, which is true as $x \to 0$.
+    \questionpart True. We need $c$ s.t. $4x^4 + 3x^3 + 2x^2 \le cx$, or equivalently, $4x^3 + 3x^2 + 2x \le c$. When $x \to 0$ and $x \in [0,1]$ we have that $x^3, x^2, x \le 1$. Thus we can choose $c = 4 + 3 + 2 = 9$ to satisify the inequality.
+    \questionpart True. Note that the Taylor expansion of $e^x$ as $x \to 0$ is $e^x = 1 + x + \frac{x^2}{2} + \frac{x^3}{6} + \frac{x^4}{24} + ...$. So the problem is to see if $\frac{x^3}{6} + \frac{x^4}{24} + ... = O(x^3)$. It is, because all the following exponentials rapidly decrease faster than $x^3$ as $x \to 0$.
+\end{alphaparts}
+
+
+\end{document}

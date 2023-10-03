@@ -1,0 +1,92 @@
+\documentclass[newpage]{homework}
+\newcommand{\hwname}{Zooey Nguyen}
+\newcommand{\hwemail}{zooeyn@ucla.edu}
+\newcommand{\hwclass}{Physics 112}
+\newcommand{\hwtype}{Homework}
+\newcommand{\hwnum}{5}
+\usepackage{siunitx}
+\begin{document}
+\maketitle
+
+
+\question
+Number of photons in cavity of volume $V = L^3$.
+\begin{align*}
+    N   &=  \sum_n \langle s_n \rangle 	\\
+    &=	\sum_n \frac{1}{e^{E_n / \tau}-1}	\\
+    &=	\sum_n \frac{1}{e^{\hbar \omega_n / \tau}-1}	\\
+    &=  \sum_{n_x,n_y,n_z} \frac{1}{e^{\hbar \omega_n / \tau}-1}    \\
+    &=  \frac{3}{8}\int_0^\infty \frac{4\pi n^2}{e^{\hbar \omega_n / \tau}-1} \dd{n}    \\
+    &=  \frac{3\pi}{2}\int_0^\infty \frac{n^2}{e^{\hbar n\pi c / \tau L}-1} \dd{n}    \\
+    &=  \frac{3\pi}{2} \left(\frac{\tau L}{\hbar\pi c}\right)^3 \int_0^\infty \frac{x^2}{e^x-1} \dd{x}  \\
+    &=  \frac{3\pi}{2} \left(\frac{\tau L}{\hbar\pi c}\right)^3 \left[ -x^2 e^{-x}|_0^\infty + \int_0^\infty 2xe^{-2x} \dd{x}  \right]  \\
+    &=  \frac{3\pi}{2} \left(\frac{\tau L}{\hbar\pi c}\right)^3 \left[ -x^2 e^{-x} - 2xe^{-x} - 2e^{-x} \right]_0^\infty   \\
+    &=  \frac{3\pi}{2} \left(\frac{\tau L}{\hbar\pi c}\right)^3 \left[ - e^{-x} (x^2 + 2x + 2) \right]_0^\infty    \\
+    \lim_{x \to 0} -\frac{x^2 + 2x + 2}{e^x}    &=  \lim_{x \to 0} -\frac{2x + 2}{e^x}  \\
+        &=  \lim_{x \to 0} -\frac{2}{e^x}   \\
+        &=  -2  \\
+    \lim_{x \to \infty} -\frac{x^2 + 2x + 2}{e^x}   &=  \lim_{x \to \infty} -\frac{2}{e^x}  \\
+        &=  0   \\
+    N   &=  \frac{3\pi}{2} \left(\frac{\tau L}{\hbar\pi c}\right)^3 (2)    \\
+    &=  \frac{3 L^3}{\pi^2} \left(\frac{\tau}{\hbar c}\right)^3 \\
+    &=  \boxed{\frac{3 V}{\pi^2} \left(\frac{\tau}{\hbar c}\right)^3}
+\end{align*}
+I'm off by a little bit of the coefficient... maybe it had to do with the number of polarisations.
+
+
+\question
+Pressure of a photon gas and so on.
+\begin{align*}
+    U	&=	\sum_j s_j \hbar \omega_j	\\
+    p   &=  - \pdv{U}{V}
+        =  - \sum_j \pdv{s_j \hbar \omega_j}{V}
+        =  \boxed{- \sum_j s_j \hbar \dv{\omega_j}{V}}    \\
+    \dv{\omega_j}{V}    &=  \dv{V} \frac{n\pi c}{L}
+        =  \dv{V} \frac{j \pi c}{L}
+        =  \dv{V} \frac{j \pi c}{V^{1/3}}
+        =  -\frac{j \pi c}{3V^{4/3}}  
+        =  -\frac{j\pi c}{L} \frac{1}{3V}
+        =  \boxed{-\frac{\omega_j}{3V}}    \\
+    p   &=  - \sum_j s_j \hbar \dv{\omega_j}{V}
+        =  \sum_j s_j \hbar \frac{\omega_j}{3V}  
+        =  \frac{1}{3V} \sum_j s_j \hbar \omega_j
+        =  \boxed{\frac{U}{3V}} 
+\end{align*}
+Kinetic pressure $p_k$ and thermal radiation pressure $p$ of gas of H atoms.
+\begin{align*}
+    p_k	&=	\frac{N}{V}\tau	=  (\SI{1}{\mole/\centi\metre^3})(\SI{6.022e23}{/\mole})(\SI{1e6}{\cm^3/\m^3}) \tau    \\
+        &=  \boxed{\SI{1.66e14}{\newton/\metre^2}}  \\
+    p   &=  \frac{U}{3V}
+        = \frac{1}{3} \frac{8\pi^2 (\tau)^4}{15h^3c^3} = \boxed{\SI{4.03e13}{\newton/\metre^2}}
+\end{align*}
+Temperature for which the pressures are equal.
+\begin{align*}
+    (\SI{6.022e29}{/\metre^3}) \tau &=	\frac{8\pi^2 \tau^4}{45h^3c^3}	\\
+    \tau   &=  hc \left(\frac{45}{8\pi^2} (\SI{6.022e29}{/\metre^3})\right)^{1/3}    \\
+        &=  \SI{1.39e-15}{\joule} \\
+    T   &=  \boxed{\SI{1.01e8}{\kelvin}}
+\end{align*}
+
+
+\question
+Heat capacity of one-dimensional EM wave/photons. Note the solution to the one-dimensional wavefunction is $E = E_0 \sin{\frac{n\pi x}{L}}\cos{\frac{n\pi vt}{L}}$.
+\begin{align*}
+    C_v	&=	\pdv{U}{\tau}	\\
+    U   &=  \sum_j \frac{\hbar \omega_j}{e^{\hbar \omega_j / \tau} - 1} \\
+        &=  \sum_n \frac{\hbar n \pi v/L}{e^{\hbar n \pi v/L\tau} - 1}  \\
+        &=  \int_0^\infty \frac{\hbar n \pi v/L}{e^{\hbar n \pi v/L\tau} - 1} \dd{n}    \\
+        &=	\frac{L\tau^2}{\hbar\pi v} \int_0^\infty \frac{x}{e^x - 1} \dd{x}	\\
+        &=  \frac{L\tau^2}{\hbar\pi v} \left[-e^{-x}(x+1)\right]_0^\infty   \\
+    \lim_{x\to0} -\frac{x+1}{e^x}   &=  -1   \\
+    \lim_{x\to\infty} -\frac{x+1}{e^x}   &=  \lim_{x\to\infty} -\frac{1}{e^x} \\
+    &=  0  \\
+    U   &=  \frac{L\tau^2}{\hbar\pi v}  \\
+    C_v &=  \pdv{\tau} \frac{L\tau^2}{\hbar\pi v}   \\
+        &=  \boxed{\frac{2L\tau}{\hbar\pi v}}
+\end{align*}
+
+
+im too tired to finish up this problem set :(
+
+
+\end{document}

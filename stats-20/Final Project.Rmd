@@ -1,0 +1,427 @@
+---
+title: "Final Project"
+author: "Zooey Nguyen"
+date: "12/10/2019"
+output: html_document
+---
+
+### Question 1
+
+```{r}
+# Loading script data.
+setwd("/Users/zooeyn/Desktop/ucla/2019-20 Fall/Stats 20/scripts")
+scripts <- data.frame()
+for (file in dir()) {
+  episode <- read.csv(file, stringsAsFactors = FALSE)
+  epname <- unlist(strsplit(file, split = ".csv"))
+  scripts <- rbind(scripts, cbind(epname, episode, stringsAsFactors = FALSE))
+}
+
+# Loading IMDB data.
+setwd("/Users/zooeyn/Desktop/ucla/2019-20 Fall/Stats 20/")
+load("imdb.RData")
+
+# Loading viewership data as demonstrated in the final guide.
+library(rvest)
+url <- "https://en.wikipedia.org/wiki/List_of_Parks_and_Recreation_episodes"
+episode_data <- html_table(html_nodes(read_html(url), xpath = "//*/table"), fill = TRUE)
+parks_and_rec <- Reduce("rbind", episode_data[2:8])
+parks_and_rec$Title <- gsub(pattern = "[^0-9a-zA-Z.,' ]", replacement = "", parks_and_rec$Title)
+
+# Verify loadings.
+ls()
+names(scripts)
+dim(scripts)
+colnames(imdb)
+dim(imdb)
+names(parks_and_rec)
+dim(parks_and_rec)
+```
+
+Based on the dimensions of script, there are 65942 total lines spoken in the show.
+
+### Question 2
+
+In order to identify the multi-part episodes in imdb, we'll use the Wikipedia dataset. Here, multi-part episodes are distinguished by writing both episode numbers as one long number. So we look at which entries these are.
+
+```{r}
+parks_and_rec$No.overall
+```
+
+The pairs of repeated episodes are 91/92, 111/112, and 124/125. Now we go to the imdb dataset to combine the indices.
+
+```{r}
+double_ep <- c(125, 112, 92) # Go backwards to avoid index updating getting in the way
+for (i in double_ep) {
+  v1 <- imdb[i-1, 2]
+  v2 <- imdb[i, 2]
+  imdb[i,] <- c((imdb[i-1,1]*v1 + imdb[i, 1]*v2)/(v1 + v2), mean(v1,v2))
+}
+imdb <- imdb[-(double_ep - 1),]
+dim(imdb) # Correct dimensions
+```
+
+```{r}
+# Cleaning Date name
+parks_and_rec$Date <- parks_and_rec$`Original air date`
+parks_and_rec$`Original air date` <- NULL
+names(parks_and_rec)
+
+# Cleaning viewers column
+# The easiest way to do this is to truncate every string here into four characters (since all the relevant numbers are truncated to two decimal places. This is easier than gsub matching.)
+parks_and_rec$`U.S. viewers(millions)` <- as.numeric(substr(parks_and_rec$`U.S. viewers(millions)`, 0, 4))
+```
+
+### Question 3
+
+We need to first write a function to calculate the Flesch reading score of a set of strings. This is pretty much taken straight from the Chapter S notes from the class.
+
+```{r}
+flesch_score <- function(text) {
+  # LIST OF SENTENCES
+  sentences <- lapply(as.list(text), function(x){strsplit(x, split = "[.!?:;]")[[1]]})
+  sentences <- unlist(sentences)
+  
+  # LIST OF WORDS
+  words <- strsplit(gsub(pattern = "[[:punct:]]", replacement = "", tolower(sentences)), split = " ")
+  keep_words <- function(words) {
+    words[nchar(words) > 0]
+  }
+  words <- lapply(words, keep_words)
+  words <- unlist(words)
+  
+  # LIST OF SYLLABLE LENGTHS PER WORD
+  rm_special_endings <- function(word_letters) {
+    word_tail <- tail(word_letters, n = 2)
+    if (is_special_ending(word_tail)) {
+      if (word_tail[2] == "e") {
+        word_letters[-length(word_letters)]
+      } else {
+        head(word_letters, n = -2)
+      }
+    } else {
+      word_letters
+    }
+  }
+  
+  is_special_ending <- function(ending) {
+    is_es <- all(ending == c("e", "s"))
+    is_ed <- all(ending == c("e", "d"))
+    is_e_not_le <- ending[2] == "e" & ending[1] != "l"
+    is_es | is_ed | is_e_not_le
+  }
+  is_vowel <- function(letter) {
+    letter %in% c("a", "e", "i", "o", "u", "y")
+  }
+  
+  count_syllables <- function(word) {
+    word_letters <- unlist(strsplit(word, split = ""))
+    if (length(word_letters) <= 3) {
+      1
+    } else {
+      word_letters <- rm_special_endings(word_letters)
+      word_vowels <- is_vowel(word_letters)
+      sum(word_vowels) - sum(diff(which(word_vowels)) == 1)
+    }
+  }
+  syllables <- unlist(lapply(words, count_syllables))
+  
+  total_sentences <- length(sentences)
+  total_words <- length(words)
+  total_syllables <- sum(syllables)
+  
+  206.835 - (1.015*total_words/total_sentences) - (84.6*total_syllables/total_words)
+}
+
+```
+
+We'll now create the new dataframes for the combined episode data and the character Flesch reading scores.
+
+```{r}
+scores <- tapply(scripts$Line, scripts$epname, flesch_score)
+combined <- cbind(parks_and_rec, imdb, scores) # a data frame
+
+characters <- c("Andy Dwyer", "Ann Perkins", "April Ludgate", "Ben Wyatt", "Chris Traeger", "Donna Meagle", "Jerry Gergich", "Leslie Knope", "Ron Swanson", "Tom Haverford")
+char_res <- tapply(scripts$Line, list(scripts$Character, scripts$epname), flesch_score)
+char_res <- char_res[rownames(char_res) %in% characters,]
+
+epname_unroll <- unlist(strsplit(colnames(char_res), split = "[a-z]"))
+season <- epname_unroll[seq(from = 2, by = 3, length.out = length(epname_unroll)/3)]
+season_ep <- epname_unroll[seq(from = 3, by = 3, length.out = length(epname_unroll)/3)]
+
+char_res <- as.data.frame(char_res)
+char_df <- data.frame("season" = numeric(), "episode in season" = numeric(), "title" = character(), "writer" = character(), "character" = character(), "reading_ease" = numeric())
+for (i in 1:122) {
+  char_scores <- char_res[i]
+  for (name in rownames(char_scores)) {
+    this_res <- char_scores[rownames(char_scores) == name,]
+    row <- data.frame("season" = season[i], "episode in season" = season_ep[i], "title" = combined$Title[i], "writer" = combined$`Written by`[i], "character" = name, "reading_ease" = this_res)
+    char_df <- rbind(char_df, row)
+  }
+}
+head(char_df)
+```
+
+
+### Question 5
+
+#### Part a: Line Plots
+```{r}
+# To indicate episode number we use 1:nrow(combined) instead of the episode number column since the episode number column has unclean episode numbers (double episodes numbers are listed side-by-side as one big number entry.)
+plot(1:nrow(combined), combined$`U.S. viewers(millions)`,
+     type = "l",
+     col = "red",
+     main = "Parks & Rec Viewership over Time",
+     ylab = "Number of U.S. viewers (millions)",
+     xlab = "Overall episode number"
+     )
+```
+
+This line plot shows that Parks & Rec viewership generally declined over time, with major peaks at the beginning at the end of the series, likely since viewers were most interested in seeing how the show was bookended. The y-axis of viewership is truncated and thus the plot heights here are not visually proportional to their actual relative magnitudes.
+
+```{r}
+plot(1:nrow(combined), combined$rating,
+     type = "l",
+     col = "blue",
+     main = "Parks & Rec IMDB Rating over Time",
+     ylab = "IMDB Rating",
+     xlab = "Overall episode number"
+     )
+```
+
+This line plot shows that the IMDB ratings of Parks & Rec episodes did not significantly change over time given the wide spread of ratings outweigh the overall sloping of the data. Exceptions to this rule are the beginning and the end, which are relatively low and high compared to the rest of the data. This makes sense since pilot episodes are often full of first impressions and exposition rather than plot-moving and finales wrap up the storylines of the entire show and often aim to end on a very high note writing-wise. Note again the y-axis here is truncated, meaning the fluctuations in the data are proportionally much smaller than they appear.
+
+```{r}
+most_lines <- names(tail(sort(table(scripts$Character)), 8))
+most_res <- rowMeans(t(char_res[rownames(char_res) %in% most_lines,]), na.rm = TRUE)
+plot(1:length(most_res), most_res,
+     type = "l",
+     main = "Parks & Rec's Reading Ease Score over Time",
+     ylab = "Average Flesch Reading Ease Score",
+     xlab = "Overall episode number",
+     col = "green"
+     )
+```
+
+The line plot charts the average Flesch reading ease score of the lines of the eight characters with the most lines in the show over the duration of the show's run. Although the graph fluctuates a lot relative to its overall trend, it does seem to have a slightly downward trend over time, meaning as the show progressed the lines became easier to comprehend. Note again the truncated y-axis showing that most of the variation occurred within the high 80s-90s range. Since on the Flesch scale the maximum is 100, the show's writing was very easy to comprehend throughout accordingly.
+
+#### Part b: Histograms
+
+My scatter_hist() function is taken entirely from the ?layout help file. The only things I changed were the specifications for breaks and limits for the x and y datasets and added label specifications for each by removing "mar = " from the first par specification.
+
+```{r}
+scatter_hist <- function(x, y, labelx, labely) {
+  xhist <- hist(x, plot = FALSE)
+  yhist <- hist(y, plot = FALSE)
+  top <- max(c(xhist$counts, yhist$counts))
+  xrange <- range(x)
+  yrange <- range(y)
+  nf <- layout(matrix(c(2,0,1,3),2,2,byrow = TRUE), c(3,1), c(1,3), TRUE)
+  layout.show(nf)
+  
+  par(c(3,3,1,1))
+  plot(x, y, xlim = xrange, ylim = yrange, xlab = labelx, ylab = labely)
+  par(mar = c(0,3,1,1))
+  barplot(xhist$counts, axes = FALSE, ylim = c(0, top), space = 0)
+  par(mar = c(3,0,1,1))
+  barplot(yhist$counts, axes = FALSE, xlim = c(0, top), space = 0, horiz = TRUE)
+}
+```
+
+```{r}
+scatter_hist(combined$votes, combined$rating, "Votes", "Rating")
+```
+Ratings per episode plotted against votes per episode. It appears from the marginal histograms that while the ratings for each episode all fell along a bell-like distribution, the distribution for the number of votes were quite right-skew, meaning a few episodes got a lot more attention than others when it came to voting on the episodes. From what we can see on the chart, the episodes that were outliers in terms of votes had the most extreme ratings, from two in the upper-right with ratings of over 9.5, and some on the bottom with ratings near 7.
+
+```{r}
+scatter_hist(combined$rating, combined$`U.S. viewers(millions)`, "Rating", "Viewers")
+```
+
+Ratings per episode vs. viewers per episode. We don't have much of a correlation between the two variables, but again we can see that there are certain outliers at the upper-left of the scatterplot representing an extremum of the data where a very high amount of viewers watched the lowest-rated episodes. From what we've seen in previous graphs (the line plot of rating vs. time), it seems this would more likely be the pilot episode, which would have garnered a lot of interest but wasn't as high quality as the rest of the show.
+
+#### Part c: Box Plots
+
+```{r}
+all_writers <- unlist(strsplit(combined$`Written by`, " & "))
+writers <- levels(as.factor(all_writers))[table(all_writers) >= 5]
+all_directors <- combined$`Directed by`
+directors <- levels(as.factor(all_directors))[table(all_directors) >= 5]
+```
+
+For the following boxplot I used the las (label style) parameter, which I found out about through Stack Overflow (Michael Z's answer): https://stackoverflow.com/questions/10286473/rotating-x-axis-labels-in-r-for-barplot/21978596. I also found more axis options here since I needed to change the label sizes: https://www.dummies.com/programming/r/how-to-change-plot-options-in-r/.
+
+```{r}
+w <- vector()
+r <- vector()
+for (i in 1:length(combined$rating)) {
+  ep_writers <- unlist(strsplit(combined$`Written by`[i], " & "))
+  if (any(writers %in% ep_writers)) {
+    ep_writers <- writers[writers %in% ep_writers]
+    for (writer in ep_writers) {
+      w <- c(w, writer)
+      r <- c(r, combined$rating[i])
+    }
+  }
+}
+
+imdb_per_writer <- data.frame("Writer" = w, "Rating" = r)
+par(mar = c(4,7,3,1))
+boxplot(imdb_per_writer$Rating ~ imdb_per_writer$Writer,
+        xlab = "Rating",
+        ylab = "",
+        main = "Rating Distribution by Writer",
+        las = 2,
+        cex.axis = 0.8,
+        horizontal = TRUE)
+```
+
+From this boxplot, it seesm that most writers fall around the expected rating range given the spread of ratings we've seen over episodes. Michael Schur has a relatively large spread of ratings compared to other writers, which may be expected since he's one of the main writers and a creator of the show. Amy Poehler has an especially high average compared to the other writers.
+
+```{r}
+d <- vector()
+v <- vector()
+for (i in 1:length(combined$rating)) {
+  ep_director <- all_directors[i]
+  if (any(directors %in% ep_director)) {
+    ep_director <- directors[directors %in% ep_director]
+    d <- c(d, ep_director)
+    v <- c(v, combined$rating[i])
+  }
+}
+
+viewers_per_director <- data.frame("Director" = d, "Viewers" = v)
+par(mar = c(4,7,3,1))
+boxplot(viewers_per_director$Viewers ~ viewers_per_director$Director,
+        xlab = "Viewers",
+        ylab = "",
+        main = "Viewing Distribution by Director",
+        las = 2,
+        cex.axis = 0.8,
+        horizontal = TRUE)
+
+```
+
+Michael Schur has a very skew-right distribution for his directed episodes with a wide spread, meaning while his episodes typically had around 8 million viewers, he directed quite a few highly-viewed episodes as well. Dean Holland on the other hand has a left-skew distribution, having a slightly opposite trend. Craig Zisk presumably had a few episodes, and had an outlier episode in the 9s.
+
+#### Part d: Histograms
+
+```{r}
+ep_res <- function(x) {
+  unlist(char_res[x,])
+}
+
+hist(ep_res("Andy Dwyer"),
+     main = "Andy and April Reading Ease Scores",
+     xlab = "Flesch Reading Ease Score",
+     density = 20,
+     col = 2,
+     prob = TRUE)
+hist(ep_res("April Ludgate"),
+     density = 20,
+     col = 3,
+     angle = 135,
+     prob = TRUE,
+     add = TRUE)
+legend("topleft", legend = c("Andy", "April"), density = 20, angle = c(45, 135), fill = c(2,5))
+
+```
+
+The histogram shows that April's peak reading ease score is slightly to the left of Andy's, meaning April's lines may typically be less easily comprehensible than Andy's.
+
+```{r}
+hist(ep_res("Donna Meagle"),
+     main = "Donna and Tom Reading Ease Scores",
+     xlab = "Flesch Reading Ease Score",
+     density = 20,
+     col = 2,
+     breaks = 12,
+     ylim = c(0, .10),
+     prob = TRUE)
+hist(ep_res("Tom Haverford"),
+     density = 20,
+     col = 3,
+     angle = 135,
+     prob = TRUE,
+     add = TRUE)
+legend("topleft", legend = c("Donna", "Tom"), density = 20, angle = c(45, 135), fill = c(2,5))
+```
+
+From this stacked histogram we can see that Donna has a much wider spread of RES over her episode lines than Tom, meaning she may have a wider variety of topics and line comprehensibility on the show.
+
+```{r}
+hist(ep_res("Leslie Knope"),
+     main = "Leslie and Ron Reading Ease Scores",
+     xlab = "Flesch Reading Ease Score",
+     density = 20,
+     col = 2,
+     breaks = 12,
+     ylim = c(0, .15),
+     xlim = c(70, 105),
+     prob = TRUE)
+hist(ep_res("Ron Swanson"),
+     density = 20,
+     col = 3,
+     angle = 135,
+     breaks = 12,
+     prob = TRUE,
+     add = TRUE)
+legend("topleft", legend = c("Leslie", "Ron"), density = 20, angle = c(45, 135), fill = c(2,5))
+```
+
+From this histogram Ron seems to have lower reading ease scores in general, meaning his lines are typically less comprehensible than Leslie's, which would make sense since Ron has a particular schtick for being a less known/independent person in the show, so a slightly more complex vocabulary could help that along.
+
+### Question 6
+
+Leslie's Flesch RES by line.
+
+```{r}
+leslie_scores <- sapply(scripts$Line[scripts$Character == "Leslie Knope"], flesch_score)
+leslie_scores <- unname(leslie_scores) # Found from https://stat.ethz.ch/R-manual/R-devel/library/base/html/unname.html. The lines as vector names were incredibly annoying.
+summary(leslie_scores)
+sd(leslie_scores)
+
+season_viewers <- tapply(combined$`U.S. viewers(millions)`, season, sum)
+summary(season_viewers)
+sd(season_viewers)
+
+season_weights <- tapply(combined$votes*combined$rating, season, sum)
+season_votes <- tapply(combined$votes, season, sum)
+season_rating_avg <- season_weights / season_votes
+summary(season_rating_avg)
+sd(season_rating_avg)
+
+lines_per_ep <- unname(table(scripts$epname))
+summary(lines_per_ep)
+sd(lines_per_ep)
+```
+
+
+### Question 8
+
+```{r}
+set.seed(105195172)
+test <- sample(leslie_scores, size = 100)
+confidence <- c(mean(test) - 1.96*sd(test)/sqrt(length(test)), mean(test) + 1.96*sd(test)/sqrt(length(test)))
+contained <- mean(leslie_scores) >= confidence[1] && mean(leslie_scores) <= confidence[2]
+contained
+```
+
+The confidence interval given by the variable confidence indicates the range of values within which we can be 95% sure that the true value of our measurement (in this case the mean) is contained in it, that is, over many experiments of taking the confidence interval provided by the distribution of one experimental sample of lines, we would expect our mean in the experiment to lie within the interval 95% of the time. In our case, the true mean does lie within our confidence interval.
+
+Finding the proportion of confidence intervals that contain Leslie's true mean reading ease:
+```{r}
+within <- logical()
+for (i in 1:1000) {
+  test <- sample(leslie_scores, size = 100)
+  confidence <- c(mean(test) - 1.96*sd(test)/sqrt(length(test)), mean(test) + 1.96*sd(test)/sqrt(length(test)))
+  contained <- mean(leslie_scores) >= confidence[1] && mean(leslie_scores) <= confidence[2]
+  within <- c(within, contained)
+}
+mean(within)
+```
+
+In our 1000-sample run, the true mean of Leslie's reading score ease was contained within a 95% confidence interval of the sample 93.4% of the time, which is around 95% as expected.
+
+
+
+
